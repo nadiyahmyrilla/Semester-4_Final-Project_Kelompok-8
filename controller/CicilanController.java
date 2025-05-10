@@ -20,22 +20,43 @@ public class CicilanController {
         }
     }
 
-    public ArrayList<Cicilan> getAllCicilan() {
+    public ArrayList<Cicilan> getCicilanByPenjualan(int idPenjualan) {
         ArrayList<Cicilan> list = new ArrayList<>();
+        String sql = "SELECT * FROM cicilan WHERE id_penjualan = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM cicilan")) {
-            while (rs.next()) {
-                list.add(new Cicilan(
-                    rs.getInt("id"),
-                    rs.getInt("penjualan_id"),
-                    rs.getDate("tanggal"),
-                    rs.getDouble("jumlah_bayar")
-                ));
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idPenjualan);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Cicilan c = new Cicilan(
+                        rs.getInt("id"),
+                        rs.getInt("id_penjualan"),
+                        rs.getDate("tanggal"),
+                        rs.getDouble("jumlah")
+                    );
+                    list.add(c);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    // Fungsi untuk mendapatkan total cicilan berdasarkan penjualan
+    public double getTotalCicilanByPenjualan(int idPenjualan) {
+        double total = 0.0;
+        String sql = "SELECT SUM(jumlah_bayar) FROM cicilan WHERE penjualan_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idPenjualan);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }
