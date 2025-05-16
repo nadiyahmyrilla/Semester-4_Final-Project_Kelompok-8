@@ -40,4 +40,32 @@ public class PengeluaranController {
         }
         return list;
     }
+
+    //Perhitungan Khusus Untuk TGL saat ini(CURDATE)
+    public ArrayList<Pengeluaran> getPengeluaranHariIni() {
+    ArrayList<Pengeluaran> list = new ArrayList<>();
+    String sql = "SELECT * FROM pengeluaran WHERE DATE(tanggal) = CURDATE()";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Pengeluaran p = new Pengeluaran(
+                rs.getInt("id"),
+                rs.getDate("tanggal"),
+                rs.getDouble("total"),
+                rs.getInt("barang_id"),
+                rs.getInt("jumlah")
+            );
+            list.add(p);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
+
 }
