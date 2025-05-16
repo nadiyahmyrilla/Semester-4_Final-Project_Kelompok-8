@@ -7,6 +7,7 @@ import controller.BarangController;
 import model.DetailPenjualan;
 import model.Pemasukan;
 import model.Pengeluaran;
+import model.DiagramLaporan;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -205,6 +206,7 @@ public class LaporanView extends JFrame {
             double totalPengeluaranHariIni = pengeluaranController.getPengeluaranHariIni().stream()
                     .mapToDouble(Pengeluaran::getTotal).sum();
             double laba = totalPemasukanHariIni - totalPengeluaranHariIni;
+            double persentaseLaba = totalPemasukanHariIni != 0 ? (laba / totalPemasukanHariIni) * 100 : 0;
 
             PdfPTable summaryTable = new PdfPTable(2);
             summaryTable.setWidthPercentage(60);
@@ -214,6 +216,8 @@ public class LaporanView extends JFrame {
             summaryTable.addCell("Rp " + totalPengeluaranHariIni);
             summaryTable.addCell("Laba / Rugi");
             summaryTable.addCell("Rp " + laba);
+            summaryTable.addCell("Persentase Laba");
+            summaryTable.addCell(String.format("%.2f%%", persentaseLaba));
 
             document.add(summaryTable);
 
@@ -221,7 +225,7 @@ public class LaporanView extends JFrame {
             try {
                 DiagramLaporan diagram = new DiagramLaporan();
                 List<DetailPenjualan> penjualanHariIni = detailPenjualanController.getDetailPenjualanHariIni();
-                diagram.sisipkanDiagramKePDF(document, penjualanHariIni, totalPemasukanHariIni, totalPengeluaranHariIni);
+                diagram.getDiagramPDF(document, penjualanHariIni, totalPemasukanHariIni, totalPengeluaranHariIni);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Gagal menambahkan diagram ke PDF: " + ex.getMessage());
