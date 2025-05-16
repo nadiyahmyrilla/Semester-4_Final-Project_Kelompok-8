@@ -16,7 +16,6 @@ public class DetailPenjualan {
         this.harga_satuan = harga_satuan;
     }
 
-    // Getter dan Setter
     public int getId() { return id; }
     public int getPenjualan_id() { return penjualan_id; }
     public int getBarang_id() { return barang_id; }
