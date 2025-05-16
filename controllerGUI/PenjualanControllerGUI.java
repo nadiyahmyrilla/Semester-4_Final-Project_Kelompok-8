@@ -177,33 +177,48 @@ public class PenjualanControllerGUI extends JPanel {
         BarangController bc = new BarangController();
         PemasukanController pec = new PemasukanController();
 
+        //
         if (isTunai) {
-            double pembayaran = Double.parseDouble(JOptionPane.showInputDialog(this, "Masukkan jumlah pembayaran (Rp)"));
-            if (pembayaran >= totalPembelian) {
-                double kembalian = pembayaran - totalPembelian;
-                JOptionPane.showMessageDialog(this, "Pembayaran sukses! Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian));
+        try {
+        double pembayaran = Double.parseDouble(JOptionPane.showInputDialog(this, "Masukkan jumlah pembayaran (Rp)"));
+        if (pembayaran >= totalPembelian) {
+            double kembalian = pembayaran - totalPembelian;
+            JOptionPane.showMessageDialog(this, "Pembayaran sukses! Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian));
 
-                pec.tambahPemasukan(new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
-                cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
+            //Simpan ke tabel penjualan
+            PenjualanController pc = new PenjualanController();
+            int idPenjualan = pc.tambahPenjualan(new Penjualan(0, new Date(), totalPembelian, "tunai", "lunas", namaPelanggan));
 
-                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                    Barang barang = entry.getKey();
-                    int jumlah = entry.getValue();
-                    double subtotal = barang.getHargaJual() * jumlah;
-                    bc.kurangiStok(barang.getId(), jumlah);
-                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Pembayaran selesai");
-                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                    Barang barang = entry.getKey();
-                    int jumlah = entry.getValue();
-                    double subtotal = barang.getHargaJual() * jumlah;
-                    bc.kurangiStok(barang.getId(), jumlah);
-                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
-                }
+            if (idPenjualan == -1) {
+                JOptionPane.showMessageDialog(this, "Gagal menyimpan penjualan.");
+                return;
             }
+
+            // Simpan ke detail_penjualan & kurangi stok
+            for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+                Barang barang = entry.getKey();
+                int jumlah = entry.getValue();
+                double subtotal = barang.getHargaJual() * jumlah;
+
+                bc.kurangiStok(barang.getId(), jumlah);
+                pc.tambahDetailPenjualan(idPenjualan, barang.getId(), jumlah, barang.getHargaJual());
+
+                pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
+            }
+
+            // Simpan pemasukan total
+            pec.tambahPemasukan(new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
+
+            cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
+
         } else {
+            JOptionPane.showMessageDialog(this, "Uang tidak cukup.");
+            }
+        } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Input pembayaran tidak valid.");
+        }
+    }
+        else {
             PenjualanController pc = new PenjualanController();
             int idPenjualan = pc.tambahPenjualan(new Penjualan(0, new Date(), totalPembelian, "hutang", "belum lunas", namaPelanggan));
 
