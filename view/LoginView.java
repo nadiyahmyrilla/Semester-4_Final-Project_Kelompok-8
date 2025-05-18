@@ -1,6 +1,7 @@
 // view/LoginView.java
 package view;
 
+import controller.AuditLogController;
 import controller.UserController;
 import model.User;
 
@@ -50,5 +51,8 @@ public class LoginView extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Login gagal. Username atau password salah.");
         }
+        //Logging user
+        new AuditLogController().catatLog("Login oleh pengguna: " + username);
+
     }
 }
