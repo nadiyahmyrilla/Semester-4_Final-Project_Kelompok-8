@@ -3,6 +3,7 @@ package controllerGUI;
 import javax.swing.*;
 import controller.*;
 import model.*;
+import controller.AuditLogController;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -167,6 +168,25 @@ public class PembelianControllerGUI extends JPanel {
         if (confirm == JOptionPane.YES_OPTION) {
             cetakPDF();
         }
+        
+        // Logging pembelian
+        StringBuilder logDetail = new StringBuilder();
+        double totalPembelian = 0;
+        for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+            Barang barang = entry.getKey();
+            int jumlah = entry.getValue();
+            double subtotal = barang.getHargaBeli() * jumlah;
+            totalPembelian += subtotal;
+
+            logDetail.append(barang.getNama())
+                    .append(" x")
+                    .append(jumlah)
+                    .append(", ");
+        }
+        String rincianBarang = logDetail.toString().replaceAll(", $", "");
+
+        String logPesan = "Pembelian barang: " + rincianBarang + ". Total: Rp" + totalPembelian;
+        new AuditLogController().catatLog(logPesan);
 
         keranjang.clear();
         updateDaftarPembelian();
