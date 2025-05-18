@@ -3,6 +3,7 @@ package controllerGUI;
 import javax.swing.*;
 import controller.*;
 import model.*;
+import controller.AuditLogController;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -237,6 +238,16 @@ public class PenjualanControllerGUI extends JPanel {
         keranjang.clear();
         updateDaftarPembelian();
         tfNamaPelanggan.setText("");
+
+        String metode;
+        if (isTunai) {
+            metode = "Tunai";
+        } else {
+            metode = "Hutang";
+        }
+        String logPesan = "Transaksi penjualan :'" + namaPelanggan + "' metode : " + metode +
+                        ", total: Rp" + new DecimalFormat("#,###.00").format(totalPembelian);
+        new AuditLogController().catatLog(logPesan);
     }
 
     private double hitungTotalPembelian() {
