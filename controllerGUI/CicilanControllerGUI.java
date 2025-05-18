@@ -1,5 +1,6 @@
 package controllerGUI;
 
+import controller.AuditLogController;
 import controller.CicilanController;
 import controller.PemasukanController;
 import controller.PenjualanController;
@@ -69,10 +70,23 @@ public class CicilanControllerGUI extends JPanel {
                         new Cicilan(0, p.getId(), new Date(), jumlah)
                     );
 
+                    // Logging cicilan
+                    new AuditLogController().catatLog(
+                        "Pembayaran cicilan Rp" + jumlah +
+                        " untuk penjualan ID: " + p.getId() +
+                        " oleh pelanggan: " + p.getNamaPelanggan()
+                    );
+
                     double sisaBaru = sisa - jumlah;
                     if (sisaBaru <= 0.0001) {
                         pc.updateStatusPenjualan(p.getId(), "lunas");
                         pec.tambahPemasukan(new model.Pemasukan(0, new Date(), jumlah, "Pelunasan hutang ID: " + p.getId()));
+                        
+                    // Logging lunas
+                    new AuditLogController().catatLog(
+                        "Hutang lunas untuk penjualan ID: " + p.getId() +
+                        " oleh pelanggan: " + p.getNamaPelanggan()
+                    );
                         JOptionPane.showMessageDialog(this, "Hutang telah lunas.");
                     } else {
                         JOptionPane.showMessageDialog(this, "Pembayaran diterima. Sisa hutang: Rp" + sisaBaru);
