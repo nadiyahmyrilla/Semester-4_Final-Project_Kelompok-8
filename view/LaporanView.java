@@ -3,6 +3,7 @@ package view;
 import controller.DetailPenjualanController;
 import controller.PemasukanController;
 import controller.PengeluaranController;
+import controller.AuditLogController;
 import controller.BarangController;
 import model.DetailPenjualan;
 import model.Pemasukan;
@@ -232,6 +233,7 @@ public class LaporanView extends JFrame {
             }
 
             document.close();
+            new AuditLogController().catatLog("Laporan Keuangan dicetak");
 
             JOptionPane.showMessageDialog(this, "Laporan berhasil disimpan ke:\n" + filePath);
         } catch (Exception e) {
