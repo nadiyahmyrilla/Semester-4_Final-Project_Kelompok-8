@@ -1,0 +1,40 @@
+<project name="FinalProject" default="run" basedir=".">
+    
+    <!-- Konfigurasi folder -->
+    <property name="src.dir"     value="."/>
+    <property name="build.dir"   value="build"/>
+    <property name="dist.dir"    value="dist"/>
+    <property name="main.class"  value="Main"/>
+
+    <!-- Bersihkan hasil build -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile semua file .java -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
+            <classpath>
+                <fileset dir="lib" includes="**/*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Buat JAR file -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.dir}/FinalProject.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Jalankan -->
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true" classpath="${build.dir}"/>
+    </target>
+
+</project>
