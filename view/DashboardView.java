@@ -17,10 +17,10 @@ public class DashboardView extends JFrame {
         JButton btnLaporan = new JButton("Laporan Keuangan");
         JButton btnAudit = new JButton("Log Audit");
 
-        btnKasir.addActionListener((ActionEvent e) -> new KasirView());
-        btnStok.addActionListener((ActionEvent e) -> new StokView());
-        btnLaporan.addActionListener((ActionEvent e) -> new LaporanView());
-        btnAudit.addActionListener((ActionEvent e) -> new AuditLogView());
+        btnKasir.addActionListener((ActionEvent e) -> new KasirView().setVisible(true));
+        btnStok.addActionListener((ActionEvent e) -> new StokView().setVisible(true));
+        btnLaporan.addActionListener((ActionEvent e) -> new LaporanView().setVisible(true));
+        btnAudit.addActionListener((ActionEvent e) -> new AuditLogView().setVisible(true));
 
         add(btnKasir);
         add(btnStok);
