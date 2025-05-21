@@ -1,2 +1,0 @@
-Main-Class: Main
-Class-Path: lib/itextpdf-5.5.13.3.jar lib/jfreechart-1.5.4.jar lib/mysql-connector-j-8.3.0.jar
