@@ -52,6 +52,22 @@ public class BarangController {
         }
         return null;
     }
+    //Menampilkan nama berdasar ID(update laporan)
+    public String getNamaBarangById(int id) {
+    String nama = "";
+    String sql = "SELECT nama FROM barang WHERE id = ?";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            nama = rs.getString("nama");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return nama;
+    }
 
     // Mengurangi stok barang setelah penjualan
     public void kurangiStok(int barangId, int jumlah) {
