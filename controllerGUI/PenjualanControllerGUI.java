@@ -3,17 +3,18 @@ package controllerGUI;
 import javax.swing.*;
 import controller.*;
 import model.*;
-import controller.AuditLogController;
 
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.*;
 import java.io.File;
 import java.io.FileOutputStream;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import controller.AuditLogController;
 
 public class PenjualanControllerGUI extends JPanel {
     private JPanel daftarBarangPanel, daftarPembelianPanel;
@@ -64,16 +65,38 @@ public class PenjualanControllerGUI extends JPanel {
 
     private void tampilkanBarang() {
         BarangController bc = new BarangController();
+        daftarBarangPanel.removeAll();
+
         for (Barang b : bc.getAllBarang()) {
             JPanel itemPanel = new JPanel(new BorderLayout());
             itemPanel.setBorder(BorderFactory.createTitledBorder(b.getNama()));
             itemPanel.setBackground(Color.lightGray);
+            
+            // Untuk label dari gambar
+            JLabel labelGambar;
+            try {
+                String path = "images/" + b.getFoto(); // pastikan ini file path yang valid
+                File file = new File(path);
+                if (!file.exists()) throw new Exception("File tidak ditemukan");
 
-            JLabel labelHarga = new JLabel("Harga: Rp" + new DecimalFormat("#,###.00").format(b.getHargaJual()));
+                ImageIcon icon = new ImageIcon(path);
+                Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+                labelGambar = new JLabel(new ImageIcon(img));
+            } catch (Exception e) {
+                labelGambar = new JLabel("No Image");
+            }
+
+            // Informasi barang
+            JPanel infoPanel = new JPanel(new GridLayout(2, 1));
+            JLabel labelNama = new JLabel(b.getNama());
+            JLabel labelHarga = new JLabel("Harga: Rp" + new DecimalFormat("#,###.00").format(b.getHargaBeli()));
+            infoPanel.add(labelNama);
+            infoPanel.add(labelHarga);
+            
             JButton btnTambah = new JButton("Tambah");
-
             btnTambah.addActionListener(e -> tambahBarang(b));
 
+            itemPanel.add(labelGambar, BorderLayout.WEST);
             itemPanel.add(labelHarga, BorderLayout.CENTER);
             itemPanel.add(btnTambah, BorderLayout.EAST);
 
@@ -178,48 +201,33 @@ public class PenjualanControllerGUI extends JPanel {
         BarangController bc = new BarangController();
         PemasukanController pec = new PemasukanController();
 
-        //
         if (isTunai) {
-        try {
-        double pembayaran = Double.parseDouble(JOptionPane.showInputDialog(this, "Masukkan jumlah pembayaran (Rp)"));
-        if (pembayaran >= totalPembelian) {
-            double kembalian = pembayaran - totalPembelian;
-            JOptionPane.showMessageDialog(this, "Pembayaran sukses! Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian));
+            double pembayaran = Double.parseDouble(JOptionPane.showInputDialog(this, "Masukkan jumlah pembayaran (Rp)"));
+            if (pembayaran >= totalPembelian) {
+                double kembalian = pembayaran - totalPembelian;
+                JOptionPane.showMessageDialog(this, "Pembayaran sukses! Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian));
 
-            //Simpan ke tabel penjualan
-            PenjualanController pc = new PenjualanController();
-            int idPenjualan = pc.tambahPenjualan(new Penjualan(0, new Date(), totalPembelian, "tunai", "lunas", namaPelanggan));
+                pec.tambahPemasukan(new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
+                cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
 
-            if (idPenjualan == -1) {
-                JOptionPane.showMessageDialog(this, "Gagal menyimpan penjualan.");
-                return;
+                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+                    Barang barang = entry.getKey();
+                    int jumlah = entry.getValue();
+                    double subtotal = barang.getHargaJual() * jumlah;
+                    bc.kurangiStok(barang.getId(), jumlah);
+                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Pembayaran selesai");
+                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+                    Barang barang = entry.getKey();
+                    int jumlah = entry.getValue();
+                    double subtotal = barang.getHargaJual() * jumlah;
+                    bc.kurangiStok(barang.getId(), jumlah);
+                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
+                }
             }
-
-            // Simpan ke detail_penjualan & kurangi stok
-            for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                Barang barang = entry.getKey();
-                int jumlah = entry.getValue();
-                double subtotal = barang.getHargaJual() * jumlah;
-
-                bc.kurangiStok(barang.getId(), jumlah);
-                pc.tambahDetailPenjualan(idPenjualan, barang.getId(), jumlah, barang.getHargaJual());
-
-                pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
-            }
-
-            // Simpan pemasukan total
-            pec.tambahPemasukan(new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
-
-            cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
-
         } else {
-            JOptionPane.showMessageDialog(this, "Uang tidak cukup.");
-            }
-        } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Input pembayaran tidak valid.");
-        }
-    }
-        else {
             PenjualanController pc = new PenjualanController();
             int idPenjualan = pc.tambahPenjualan(new Penjualan(0, new Date(), totalPembelian, "hutang", "belum lunas", namaPelanggan));
 
@@ -238,16 +246,6 @@ public class PenjualanControllerGUI extends JPanel {
         keranjang.clear();
         updateDaftarPembelian();
         tfNamaPelanggan.setText("");
-
-        String metode;
-        if (isTunai) {
-            metode = "Tunai";
-        } else {
-            metode = "Hutang";
-        }
-        String logPesan = "Transaksi penjualan :'" + namaPelanggan + "' metode : " + metode +
-                        ", total: Rp" + new DecimalFormat("#,###.00").format(totalPembelian);
-        new AuditLogController().catatLog(logPesan);
     }
 
     private double hitungTotalPembelian() {
@@ -265,8 +263,10 @@ public class PenjualanControllerGUI extends JPanel {
         try {
             String folderPath = "pdf/penjualan/";
             File folder = new File(folderPath);
-            if (!folder.exists()) folder.mkdirs();
-
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            
             String fileName = "Nota_Penjualan_" + System.currentTimeMillis() + ".pdf";
             String filePath = folderPath + fileName;
 

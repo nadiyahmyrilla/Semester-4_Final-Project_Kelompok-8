@@ -3,17 +3,18 @@ package controllerGUI;
 import javax.swing.*;
 import controller.*;
 import model.*;
-import controller.AuditLogController;
 
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.*;
 import java.io.File;
 import java.io.FileOutputStream;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import controller.AuditLogController;
 
 public class PembelianControllerGUI extends JPanel {
     private JPanel daftarBarangPanel, daftarPembelianPanel;
@@ -55,16 +56,38 @@ public class PembelianControllerGUI extends JPanel {
 
     private void tampilkanBarang() {
         BarangController bc = new BarangController();
+        daftarBarangPanel.removeAll();
+
         for (Barang b : bc.getAllBarang()) {
             JPanel itemPanel = new JPanel(new BorderLayout());
             itemPanel.setBorder(BorderFactory.createTitledBorder(b.getNama()));
             itemPanel.setBackground(Color.lightGray);
+            
+            // Untuk label dari gambar
+            JLabel labelGambar;
+            try {
+                String path = "images/" + b.getFoto(); // pastikan ini file path yang valid
+                File file = new File(path);
+                if (!file.exists()) throw new Exception("File tidak ditemukan");
 
+                ImageIcon icon = new ImageIcon(path);
+                Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+                labelGambar = new JLabel(new ImageIcon(img));
+            } catch (Exception e) {
+                labelGambar = new JLabel("No Image");
+            }
+
+            // Informasi barang
+            JPanel infoPanel = new JPanel(new GridLayout(2, 1));
+            JLabel labelNama = new JLabel(b.getNama());
             JLabel labelHarga = new JLabel("Harga: Rp" + new DecimalFormat("#,###.00").format(b.getHargaBeli()));
+            infoPanel.add(labelNama);
+            infoPanel.add(labelHarga);
+            
             JButton btnTambah = new JButton("Tambah");
-
             btnTambah.addActionListener(e -> tambahBarang(b));
 
+            itemPanel.add(labelGambar, BorderLayout.WEST);
             itemPanel.add(labelHarga, BorderLayout.CENTER);
             itemPanel.add(btnTambah, BorderLayout.EAST);
 
@@ -168,25 +191,6 @@ public class PembelianControllerGUI extends JPanel {
         if (confirm == JOptionPane.YES_OPTION) {
             cetakPDF();
         }
-        
-        // Logging pembelian
-        StringBuilder logDetail = new StringBuilder();
-        double totalPembelian = 0;
-        for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-            Barang barang = entry.getKey();
-            int jumlah = entry.getValue();
-            double subtotal = barang.getHargaBeli() * jumlah;
-            totalPembelian += subtotal;
-
-            logDetail.append(barang.getNama())
-                    .append(" x")
-                    .append(jumlah)
-                    .append(", ");
-        }
-        String rincianBarang = logDetail.toString().replaceAll(", $", "");
-
-        String logPesan = "Pembelian barang: " + rincianBarang + ". Total: Rp" + totalPembelian;
-        new AuditLogController().catatLog(logPesan);
 
         keranjang.clear();
         updateDaftarPembelian();
@@ -217,6 +221,7 @@ public class PembelianControllerGUI extends JPanel {
             PdfPTable table = new PdfPTable(3);
             table.addCell("Barang");
             table.addCell("Jumlah");
+            table.addCell("Harga Satuan");
             table.addCell("Subtotal");
 
             double total = 0;
@@ -243,4 +248,5 @@ public class PembelianControllerGUI extends JPanel {
             JOptionPane.showMessageDialog(this, "Gagal mencetak PDF: " + e.getMessage());
         }
     }
+
 }
