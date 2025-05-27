@@ -16,6 +16,7 @@ CREATE TABLE barang (
     harga_jual DECIMAL(10,2),
     stok INT
 );
+ALTER TABLE barang ADD COLUMN foto VARCHAR(255); -- Run terpisah karena variabel tambahan baru --
 
 -- Tabel pemasukan
 CREATE TABLE pemasukan (
