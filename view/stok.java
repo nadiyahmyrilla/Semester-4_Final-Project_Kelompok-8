@@ -21,10 +21,16 @@ import java.util.ArrayList;
 
 public class stok extends javax.swing.JFrame {
 
-    /**
-     * Creates new form stok
-     */
+    private JTable table;
+    private DefaultTableModel tableModel;
+    
     public stok() {
+        setTitle("Stok Barang");
+        setSize(700, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        initUI();
         initComponents();
         tampilkanData();
         resizeLogo();
@@ -288,6 +294,15 @@ public class stok extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+    private void initUI() {
+        String[] columnNames = {"ID", "Nama", "Harga Beli", "Harga Jual", "Stok"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        add(scrollPane, BorderLayout.CENTER);
+    }
+    
     private void resizeLogo() {
     ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo2.jpg"));
     Image image = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -309,7 +324,8 @@ public class stok extends javax.swing.JFrame {
             b.getNama(),
             b.getHargaBeli(),
             b.getHargaJual(),
-            b.getStok()
+            b.getStok(),
+            b.getFoto()
         });
     }
 }
