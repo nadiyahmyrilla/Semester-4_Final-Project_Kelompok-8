@@ -14,9 +14,6 @@ import model.Barang;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class stok extends javax.swing.JFrame {
@@ -34,7 +31,10 @@ public class stok extends javax.swing.JFrame {
         initComponents();
         tampilkanData();
         resizeLogo();
+        aktifkanTombol();
     }
+    
+    private ImageIcon selectedImage = null;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -111,13 +111,13 @@ public class stok extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nama", "Harga Beli", "Harga Jual", "Stok"
+                "ID", "Nama", "Harga Beli", "Harga Jual", "Stok", "Foto"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -206,24 +206,27 @@ public class stok extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                .addGap(22, 22, 22)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -252,7 +255,7 @@ public class stok extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,7 +282,7 @@ public class stok extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -299,35 +302,68 @@ public class stok extends javax.swing.JFrame {
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
-
         add(scrollPane, BorderLayout.CENTER);
     }
-    
+
     private void resizeLogo() {
-    ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo2.jpg"));
-    Image image = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-    jLabel2.setIcon(new ImageIcon(image));
-}
-    /**
-     * @param args the command line arguments
-     */
-    private void tampilkanData() {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Bersihkan isi tabel dulu
-
-    BarangController controller = new BarangController();
-    ArrayList<Barang> list = controller.getAllBarang();
-
-    for (Barang b : list) {
-        model.addRow(new Object[]{
-            b.getId(),
-            b.getNama(),
-            b.getHargaBeli(),
-            b.getHargaJual(),
-            b.getStok(),
-            b.getFoto()
-        });
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo2.jpg"));
+        Image image = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        jLabel2.setIcon(new ImageIcon(image));
     }
+
+    private void tampilkanData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Bersihkan isi tabel dulu
+
+        BarangController controller = new BarangController();
+        ArrayList<Barang> list = controller.getAllBarang();
+
+        for (Barang b : list) {
+            model.addRow(new Object[]{
+                b.getId(),
+                b.getNama(),
+                b.getHargaBeli(),
+                b.getHargaJual(),
+                b.getStok()
+                // Kolom b.getFoto() dihapus karena tidak ada di DB
+            });
+        }
+    }
+    
+    // Tambahan fungsi untuk mengaktifkan tombol
+private void aktifkanTombol() {
+
+    // Tombol Pilih Gambar
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            java.io.File file = fileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            selectedImage = new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+            jLabel9.setText(file.getName()); // Menampilkan nama file di label
+        }
+    }
+});
+
+    // Tombol Tambah Barang
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            String nama = jTextField1.getText();
+            String harga = jTextField2.getText();
+            String stok = jTextField3.getText();
+
+            if (nama.isEmpty() || harga.isEmpty() || stok.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Lengkapi semua data barang!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+            }
+        }
+    });
 }
     
     public static void main(String args[]) {
@@ -381,3 +417,5 @@ public class stok extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
+
+
