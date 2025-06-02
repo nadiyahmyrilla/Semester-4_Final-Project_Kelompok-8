@@ -81,7 +81,7 @@ public laporanPenjualan() {
         });
 
         jButton3.setBackground(new java.awt.Color(111, 77, 55));
-        jButton3.setFont(new java.awt.Font("Tempus Sans ITC", 1, 12)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(212, 184, 147));
         jButton3.setText("LAPORAN PEMBELIAN");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +177,7 @@ public laporanPenjualan() {
         jLabel3.setForeground(new java.awt.Color(237, 219, 195));
         jLabel3.setText("BENING WORK");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/logo5.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/logo.png"))); // NOI18N
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel6.setPreferredSize(new java.awt.Dimension(60, 60));
 
@@ -186,10 +186,12 @@ public laporanPenjualan() {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(274, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addContainerGap(275, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -376,8 +378,8 @@ public laporanPenjualan() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void resizeLogo() {
-    ImageIcon icon = new ImageIcon(getClass().getResource("/asset/logo5.png"));
-    Image image = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+    ImageIcon icon = new ImageIcon(getClass().getResource("/asset/logo.png"));
+    Image image = icon.getImage().getScaledInstance(80, 60, Image.SCALE_SMOOTH);
     jLabel6.setIcon(new ImageIcon(image));
 }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -437,20 +439,10 @@ public static void main(String[] args) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAudit3;
-    private javax.swing.JButton btnAudit4;
     private javax.swing.JButton btnAudit5;
-    private javax.swing.JButton btnKasir3;
-    private javax.swing.JButton btnKasir4;
     private javax.swing.JButton btnKasir5;
-    private javax.swing.JButton btnLaporan3;
-    private javax.swing.JButton btnLaporan4;
     private javax.swing.JButton btnLaporan5;
-    private javax.swing.JButton btnLogout3;
-    private javax.swing.JButton btnLogout4;
     private javax.swing.JButton btnLogout5;
-    private javax.swing.JButton btnStock3;
-    private javax.swing.JButton btnStock4;
     private javax.swing.JButton btnStock5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -462,8 +454,6 @@ public static void main(String[] args) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -471,8 +461,6 @@ public static void main(String[] args) {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
