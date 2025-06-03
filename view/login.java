@@ -7,10 +7,11 @@ package view;
 import controller.AuditLogController;
 import controller.UserController;
 import model.User;
+import style.BlurPopupDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 /**
@@ -228,13 +229,26 @@ if (imageURL != null) {
         User user = userController.authenticate(username, password); // pakai User, bukan boolean
 
         if (user != null) {
-            JOptionPane.showMessageDialog(this, "Login Berhasil!");
-
-            // Misalnya lanjut ke Home
-            new home().setVisible(true); // kirim data user ke halaman Home
-            this.dispose();
+            new BlurPopupDialog(this,
+                "Welcome!",
+                "Login berhasil sebagai <b>" + user.getUsername() + "</b>",
+                new String[]{"Continue"},
+                new ActionListener[]{
+                    e -> {
+                        new DashboardView();
+                        dispose();
+                    }
+                }
+            ).setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Username atau Password salah!");
+            new BlurPopupDialog(this,
+                "Login Gagal",
+                "Username atau password salah.",
+                new String[]{"Coba Lagi"},
+                new ActionListener[]{
+                    e -> {} // Tidak melakukan apa pun, hanya menutup popup
+                }
+            ).setVisible(true);
         }
     
     }//GEN-LAST:event_LoginActionPerformed
