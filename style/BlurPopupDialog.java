@@ -8,13 +8,19 @@ public class BlurPopupDialog extends JDialog {
 
     public BlurPopupDialog(JFrame parent, String title, String message,
                            String[] buttonLabels, ActionListener[] buttonActions) {
+        this(parent, title, message, buttonLabels, buttonActions, null);
+    }
+
+    public BlurPopupDialog(JFrame parent, String title, String message,
+                           String[] buttonLabels, ActionListener[] buttonActions,
+                           JComponent inputComponent) {
         super(parent, true);
         setUndecorated(true);
-        setSize(350, 250);
+        setSize(350, 270);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // Simulasi efek blur dengan panel semi-transparan di parent
+        // Simulasi efek blur
         JPanel glassPane = new JPanel();
         glassPane.setBackground(new Color(0, 0, 0, 100));
         glassPane.setOpaque(true);
@@ -36,6 +42,7 @@ public class BlurPopupDialog extends JDialog {
         lblMessage.setForeground(new Color(159, 2, 100));
         lblMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Panel tombol
         JPanel buttonPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -45,9 +52,9 @@ public class BlurPopupDialog extends JDialog {
         };
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        final Color defaultColor = new Color(159, 2, 100);        // Default button color
-        final Color hoverColor = new Color(254, 133, 124);        // Hover background
-        final Color hoverTextColor = new Color(237, 219, 195);    // Hover text color
+        final Color defaultColor = new Color(159, 2, 100);
+        final Color hoverColor = new Color(254, 133, 124);
+        final Color hoverTextColor = new Color(237, 219, 195);
         final Color defaultTextColor = new Color(159, 2, 100);
 
         for (int i = 0; i < buttonLabels.length; i++) {
@@ -60,7 +67,7 @@ public class BlurPopupDialog extends JDialog {
             btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
             btn.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
 
-            // Hover effect
+            // Hover
             btn.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -78,19 +85,27 @@ public class BlurPopupDialog extends JDialog {
             final int index = i;
             btn.addActionListener(e -> {
                 buttonActions[index].actionPerformed(e);
-                glassPane.setVisible(false); // Matikan efek blur
+                glassPane.setVisible(false);
                 dispose();
             });
             buttonPanel.add(btn);
         }
 
-        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // Tambahkan glue dan komponen ke panel utama
+        // Tambahkan komponen ke panel
         panel.add(Box.createVerticalGlue());
         panel.add(lblTitle);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(lblMessage);
-        panel.add(Box.createRigidArea(new Dimension(0, 20)));
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        // Jika ada input field, tambahkan
+        if (inputComponent != null) {
+            inputComponent.setMaximumSize(new Dimension(300, 30));
+            inputComponent.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panel.add(inputComponent);
+            panel.add(Box.createRigidArea(new Dimension(0, 15)));
+        }
+
         panel.add(buttonPanel);
         panel.add(Box.createVerticalGlue());
         add(panel, BorderLayout.CENTER);

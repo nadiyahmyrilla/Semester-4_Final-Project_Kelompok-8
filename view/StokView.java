@@ -2,6 +2,7 @@ package view;
 
 import controller.BarangController;
 import model.Barang;
+import style.BlurPopupDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
 
 public class StokView extends JFrame {
     private DefaultTableModel model;
@@ -70,7 +72,16 @@ public class StokView extends JFrame {
                 int stok = Integer.parseInt(tfStok.getText().trim());
 
                 if (selectedImageFile == null) {
-                    JOptionPane.showMessageDialog(this, "Pilih gambar terlebih dahulu.");
+                    Window window = SwingUtilities.getWindowAncestor(this);
+                    if (window instanceof JFrame frame) {
+                        new BlurPopupDialog(
+                            frame,
+                            "Inputkan Gambar",
+                            "Gambar belum dimasukan",
+                            new String[]{"OK"},
+                            new ActionListener[]{evt -> {}}
+                        ).setVisible(true);
+                    }
                     return;
                 }
 
@@ -89,7 +100,16 @@ public class StokView extends JFrame {
                 boolean sukses = controller.tambahBarang(nama, hargaBeli, hargaJual, stok, namaGambar);
 
                 if (sukses) {
-                    JOptionPane.showMessageDialog(this, "Barang berhasil ditambahkan!");
+                    Window window = SwingUtilities.getWindowAncestor(this);
+                    if (window instanceof JFrame frame) {
+                        new BlurPopupDialog(
+                            frame,
+                            "BErhasil Menambahkan",
+                            "Barang berhasil ditambahkan",
+                            new String[]{"OK"},
+                            new ActionListener[]{evt -> {}}
+                        ).setVisible(true);
+                    }
                     tfNama.setText("");
                     tfHargaBeli.setText("");
                     tfStok.setText("");
@@ -97,12 +117,39 @@ public class StokView extends JFrame {
                     selectedImageFile = null;
                     loadBarang();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Gagal menambahkan barang.");
+                    Window window = SwingUtilities.getWindowAncestor(this);
+                    if (window instanceof JFrame frame) {
+                        new BlurPopupDialog(
+                            frame,
+                            "Gagal Memuat",
+                            "Gambar yang diinputkan gagal dimuat",
+                            new String[]{"OK"},
+                            new ActionListener[]{evt -> {}}
+                        ).setVisible(true);
+                    }
                 }
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Input tidak valid.");
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window instanceof JFrame frame) {
+                    new BlurPopupDialog(
+                        frame,
+                        "Invalid input",
+                        "Anda saya memasukan",
+                        new String[]{"OK"},
+                        new ActionListener[]{evt -> {}}
+                    ).setVisible(true);
+                }
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Gagal menyimpan gambar.");
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window instanceof JFrame frame) {
+                    new BlurPopupDialog(
+                        frame,
+                        "Gagal Memuat",
+                        "Gambar yang diinputkan gagal dimuat",
+                        new String[]{"OK"},
+                        new ActionListener[]{evt -> {}}
+                    ).setVisible(true);
+                }
             }
         });
 

@@ -3,6 +3,7 @@ package controllerGUI;
 import javax.swing.*;
 import controller.*;
 import model.*;
+import style.BlurPopupDialog;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -11,10 +12,10 @@ import java.awt.Image;
 import java.util.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.awt.event.ActionListener;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import controller.AuditLogController;
 
 public class PenjualanControllerGUI extends JPanel {
     private JPanel daftarBarangPanel, daftarPembelianPanel;
@@ -108,18 +109,54 @@ public class PenjualanControllerGUI extends JPanel {
     }
 
     private void tambahBarang(Barang barang) {
-        String input = JOptionPane.showInputDialog(this, "Masukkan jumlah untuk " + barang.getNama());
-        if (input == null || input.isBlank()) return;
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof JFrame frame) {
+            JTextField inputField = new JTextField();
 
-        try {
-            int jumlah = Integer.parseInt(input);
-            if (jumlah <= 0) throw new NumberFormatException();
+            new BlurPopupDialog(
+                frame,
+                "Tambah Barang",
+                "Masukkan jumlah untuk <b>" + barang.getNama() + "</b>:",
+                new String[]{"OK", "Batal"},
+                new ActionListener[]{
+                    e -> {
+                        String input = inputField.getText();
+                        if (input == null || input.isBlank()) return;
 
-            keranjang.put(barang, keranjang.getOrDefault(barang, 0) + jumlah);
-            updateDaftarPembelian();
+                        try {
+                            int jumlahInput = Integer.parseInt(input);
+                            if (jumlahInput <= 0) throw new NumberFormatException();
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Jumlah tidak valid.");
+                            int jumlahSekarang = keranjang.getOrDefault(barang, 0);
+                            int totalJumlah = jumlahSekarang + jumlahInput;
+
+                            if (totalJumlah > barang.getStok()) {
+                                new BlurPopupDialog(
+                                    frame,
+                                    "Stok Tidak Cukup",
+                                    "Jumlah yang dimasukkan melebihi stok tersedia (" + barang.getStok() + ").",
+                                    new String[]{"OK"},
+                                    new ActionListener[]{evt -> {}}
+                                ).setVisible(true);
+                                return;
+                            }
+
+                            keranjang.put(barang, totalJumlah);
+                            updateDaftarPembelian();
+                        } catch (NumberFormatException ex) {
+                            new BlurPopupDialog(
+                                frame,
+                                "Jumlah Tidak Valid",
+                                "Masukkan angka yang valid.",
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+                        }
+                    },
+                    e -> {} // Jika dibatalkan, tidak melakukan apa-apa
+                },
+                inputField
+            ).setVisible(true);
         }
     }
 
@@ -162,87 +199,185 @@ public class PenjualanControllerGUI extends JPanel {
     }
 
     private void editJumlah(Barang barang) {
-        String input = JOptionPane.showInputDialog(this, "Ubah jumlah untuk " + barang.getNama(), keranjang.get(barang));
-        if (input == null || input.isBlank()) return;
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof JFrame frame) {
+            JTextField inputField = new JTextField(String.valueOf(keranjang.get(barang)));
 
-        try {
-            int jumlahBaru = Integer.parseInt(input);
-            if (jumlahBaru <= 0) {
-                keranjang.remove(barang);
-            } else {
-                keranjang.put(barang, jumlahBaru);
-            }
-            updateDaftarPembelian();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Jumlah tidak valid.");
+            new BlurPopupDialog(
+                frame,
+                "Edit Jumlah",
+                "Ubah jumlah untuk <b>" + barang.getNama() + "</b>:",
+                new String[]{"OK", "Batal"},
+                new ActionListener[]{
+                    e -> {
+                        try {
+                            int jumlahBaru = Integer.parseInt(inputField.getText());
+                            if (jumlahBaru <= 0) {
+                                keranjang.remove(barang);
+                            } else {
+                                if (jumlahBaru > barang.getStok()) {
+                                    new BlurPopupDialog(
+                                        frame,
+                                        "Stok Tidak Cukup",
+                                        "Jumlah yang dimasukkan melebihi stok tersedia (" + barang.getStok() + ").",
+                                        new String[]{"OK"},
+                                        new ActionListener[]{evt -> {}}
+                                    ).setVisible(true);
+                                    return;
+                                }
+                                keranjang.put(barang, jumlahBaru);
+                            }
+                            updateDaftarPembelian();
+                        } catch (NumberFormatException ex) {
+                            new BlurPopupDialog(
+                                frame,
+                                "Jumlah Tidak Valid",
+                                "Masukkan angka yang valid.",
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+                        }
+                    },
+                    e -> {} // batal
+                },
+                inputField
+            ).setVisible(true);
         }
     }
 
     private void prosesBayar() {
-        if (keranjang.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tidak ada barang yang dibeli.");
-            return;
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof JFrame frame) {
+            if (keranjang.isEmpty()) {
+                new BlurPopupDialog(
+                    frame,
+                    "Tidak Ada Barang",
+                    "Tidak ada barang yang dibeli.",
+                    new String[]{"OK"},
+                    new ActionListener[]{e -> {}}
+                ).setVisible(true);
+                return;
+            }
+
+            String namaPelanggan = tfNamaPelanggan.getText().trim();
+            if (namaPelanggan.isEmpty()) {
+                new BlurPopupDialog(
+                    frame,
+                    "Nama Kosong",
+                    "Nama pelanggan tidak boleh kosong.",
+                    new String[]{"OK"},
+                    new ActionListener[]{e -> {}}
+                ).setVisible(true);
+                return;
+            }
+
+            new BlurPopupDialog(
+                frame,
+                "Metode Pembayaran",
+                "Pilih metode pembayaran:",
+                new String[]{"Tunai", "Cicilan"},
+                new ActionListener[]{
+                    e -> prosesTunai(frame),
+                    e -> prosesCicilan(namaPelanggan)
+                }
+            ).setVisible(true);
         }
+    }
 
-        String namaPelanggan = tfNamaPelanggan.getText().trim();
-        if (namaPelanggan.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nama pelanggan tidak boleh kosong.");
-            return;
-        }
+    private void prosesTunai(JFrame frame) {
+        JTextField bayarField = new JTextField();
 
-        String[] options = {"Tunai", "Cicilan"};
-        int pilihan = JOptionPane.showOptionDialog(this, "Pilih metode pembayaran", "Metode Pembayaran",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        new BlurPopupDialog(
+            frame,
+            "Pembayaran Tunai",
+            "Masukkan jumlah pembayaran (Rp):",
+            new String[]{"Bayar", "Batal"},
+            new ActionListener[]{
+                e -> {
+                    try {
+                        double totalPembelian = hitungTotalPembelian();
+                        double pembayaran = Double.parseDouble(bayarField.getText());
 
-        if (pilihan == JOptionPane.CLOSED_OPTION) return;
+                        if (pembayaran >= totalPembelian) {
+                            double kembalian = pembayaran - totalPembelian;
 
-        boolean isTunai = (pilihan == 0);
-        double totalPembelian = hitungTotalPembelian();
+                            new BlurPopupDialog(
+                                frame,
+                                "Pembayaran Berhasil",
+                                "Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian),
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+
+                            BarangController bc = new BarangController();
+                            PemasukanController pec = new PemasukanController();
+                            pec.tambahPemasukan(new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
+                            cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
+
+                            for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+                                Barang barang = entry.getKey();
+                                int jumlah = entry.getValue();
+                                double subtotal = barang.getHargaJual() * jumlah;
+                                bc.kurangiStok(barang.getId(), jumlah);
+                                pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
+                            }
+
+                            keranjang.clear();
+                            updateDaftarPembelian();
+                            tfNamaPelanggan.setText("");
+                        } else {
+                            new BlurPopupDialog(
+                                frame,
+                                "Pembayaran Gagal",
+                                "Jumlah pembayaran kurang dari total.",
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+                        }
+                    } catch (NumberFormatException ex) {
+                        new BlurPopupDialog(
+                            frame,
+                            "Input Tidak Valid",
+                            "Masukkan angka yang valid.",
+                            new String[]{"OK"},
+                            new ActionListener[]{evt -> {}}
+                        ).setVisible(true);
+                    }
+                },
+                e -> {}
+            },
+            bayarField
+        ).setVisible(true);
+    }
+
+    private void prosesCicilan(String namaPelanggan) {
+        PenjualanController pc = new PenjualanController();
         BarangController bc = new BarangController();
-        PemasukanController pec = new PemasukanController();
 
-        if (isTunai) {
-            double pembayaran = Double.parseDouble(JOptionPane.showInputDialog(this, "Masukkan jumlah pembayaran (Rp)"));
-            if (pembayaran >= totalPembelian) {
-                double kembalian = pembayaran - totalPembelian;
-                JOptionPane.showMessageDialog(this, "Pembayaran sukses! Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian));
+        double totalPembelian = hitungTotalPembelian();
+        int idPenjualan = pc.tambahPenjualan(new Penjualan(0, new Date(), totalPembelian, "hutang", "belum lunas", namaPelanggan));
 
-                pec.tambahPemasukan(new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
-                cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
-
-                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                    Barang barang = entry.getKey();
-                    int jumlah = entry.getValue();
-                    double subtotal = barang.getHargaJual() * jumlah;
-                    bc.kurangiStok(barang.getId(), jumlah);
-                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Pembayaran selesai");
-                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                    Barang barang = entry.getKey();
-                    int jumlah = entry.getValue();
-                    double subtotal = barang.getHargaJual() * jumlah;
-                    bc.kurangiStok(barang.getId(), jumlah);
-                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal, "Penjualan barang: " + barang.getNama()));
-                }
-            }
-        } else {
-            PenjualanController pc = new PenjualanController();
-            int idPenjualan = pc.tambahPenjualan(new Penjualan(0, new Date(), totalPembelian, "hutang", "belum lunas", namaPelanggan));
-
-            for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                Barang barang = entry.getKey();
-                int jumlah = entry.getValue();
-                bc.kurangiStok(barang.getId(), jumlah);
-                pc.tambahDetailPenjualan(idPenjualan, barang.getId(), jumlah, barang.getHargaJual());
-            }
-
-            new CicilanController().tambahCicilan(new Cicilan(0, idPenjualan, new Date(), 0.0));
-            JOptionPane.showMessageDialog(this, "Pembelian dicatat sebagai hutang.");
-            cetakPDF("Pembelian Cicilan", 1, totalPembelian, totalPembelian, "Cicilan");
+        for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+            Barang barang = entry.getKey();
+            int jumlah = entry.getValue();
+            bc.kurangiStok(barang.getId(), jumlah);
+            pc.tambahDetailPenjualan(idPenjualan, barang.getId(), jumlah, barang.getHargaJual());
         }
 
+        new CicilanController().tambahCicilan(new Cicilan(0, idPenjualan, new Date(), 0.0));
+
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof JFrame frame) {
+            new BlurPopupDialog(
+                frame,
+                "Cicilan Dicatat",
+                "Pembelian dicatat sebagai hutang.",
+                new String[]{"OK"},
+                new ActionListener[]{e -> {}}
+            ).setVisible(true);
+        }
+
+        cetakPDF("Pembelian Cicilan", 1, totalPembelian, totalPembelian, "Cicilan");
         keranjang.clear();
         updateDaftarPembelian();
         tfNamaPelanggan.setText("");
@@ -295,10 +430,28 @@ public class PenjualanControllerGUI extends JPanel {
             document.add(new Paragraph("Total: Rp" + new DecimalFormat("#,###.00").format(total)));
 
             document.close();
-            JOptionPane.showMessageDialog(this, "Struk disimpan di: " + filePath);
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window instanceof JFrame frame) {
+                new BlurPopupDialog(
+                    frame,
+                    "Cetak PDF",
+                    "Struk disimpan di: " + filePath,
+                    new String[]{"OK"},
+                    new ActionListener[]{evt -> {}}
+                ).setVisible(true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Gagal mencetak PDF: " + e.getMessage());
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window instanceof JFrame frame) {
+                new BlurPopupDialog(
+                    frame,
+                    "Gagal Mencetak",
+                    "Gagal mencetak PDF: " + e.getMessage(),
+                    new String[]{"OK"},
+                    new ActionListener[]{evt -> {}}
+                ).setVisible(true);
+            }
         }
     }
 }

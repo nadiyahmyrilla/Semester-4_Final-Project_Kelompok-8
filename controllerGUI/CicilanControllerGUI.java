@@ -6,11 +6,13 @@ import controller.PemasukanController;
 import controller.PenjualanController;
 import model.Cicilan;
 import model.Penjualan;
+import style.BlurPopupDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.awt.event.ActionListener;
 
 public class CicilanControllerGUI extends JPanel {
     private PenjualanController pc = new PenjualanController();
@@ -82,19 +84,47 @@ public class CicilanControllerGUI extends JPanel {
                         pc.updateStatusPenjualan(p.getId(), "lunas");
                         pec.tambahPemasukan(new model.Pemasukan(0, new Date(), jumlah, "Pelunasan hutang ID: " + p.getId()));
                         
-                    // Logging lunas
-                    new AuditLogController().catatLog(
-                        "Hutang lunas untuk penjualan ID: " + p.getId() +
-                        " oleh pelanggan: " + p.getNamaPelanggan()
-                    );
-                        JOptionPane.showMessageDialog(this, "Hutang telah lunas.");
+                        // Logging lunas
+                        new AuditLogController().catatLog(
+                            "Hutang lunas untuk penjualan ID: " + p.getId() +
+                            " oleh pelanggan: " + p.getNamaPelanggan()
+                        );
+                        
+                        Window window = SwingUtilities.getWindowAncestor(this);
+                        if (window instanceof JFrame frame) {
+                            new BlurPopupDialog(
+                                frame,
+                                "Lunas",
+                                "Hutang telah lunas",
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Pembayaran diterima. Sisa hutang: Rp" + sisaBaru);
+                        Window window = SwingUtilities.getWindowAncestor(this);
+                        if (window instanceof JFrame frame) {
+                            new BlurPopupDialog(
+                                frame,
+                                "Hutang",
+                                "Pembayaran diterima. Sisa hutang: " + sisaBaru,
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+                        }
                     }
 
                     loadData(); // refresh tampilan
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Jumlah tidak valid.");
+                    Window window = SwingUtilities.getWindowAncestor(this);
+                        if (window instanceof JFrame frame) {
+                            new BlurPopupDialog(
+                                frame,
+                                "Invalid",
+                                "Anda salah menginputkan jumlah",
+                                new String[]{"OK"},
+                                new ActionListener[]{evt -> {}}
+                            ).setVisible(true);
+                        }
                 }
             });
 
