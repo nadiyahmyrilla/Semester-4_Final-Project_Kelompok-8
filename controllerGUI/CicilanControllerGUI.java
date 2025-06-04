@@ -22,13 +22,22 @@ public class CicilanControllerGUI extends JPanel {
 
     public CicilanControllerGUI() {
         setLayout(new BorderLayout());
+        setBackground(new Color(255, 235, 202));
+
 
         JButton btnRefresh = new JButton("Muat Ulang Hutang");
+        btnRefresh.setBackground(new Color(102, 51, 0));
+        btnRefresh.setForeground(new Color(225, 235, 202));
         btnRefresh.addActionListener(e -> loadData());
         add(btnRefresh, BorderLayout.NORTH);
 
-        listPanel = new JPanel();
+         listPanel = new JPanel();
+        listPanel.setBackground(new Color(255, 235, 202));
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+        listPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(153, 0, 0), 2),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
 
         JScrollPane scroll = new JScrollPane(listPanel);
         add(scroll, BorderLayout.CENTER);
@@ -45,8 +54,11 @@ public class CicilanControllerGUI extends JPanel {
             double sisa = p.getTotal() - dibayar;
 
             JPanel card = new JPanel(new BorderLayout(10, 10));
-            card.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-            card.setBackground(new Color(245, 245, 245));
+           card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(153, 0, 0), 2),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+           card.setBackground(new Color(255, 235, 202));
             card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));
 
             // Info pelanggan
@@ -57,9 +69,16 @@ public class CicilanControllerGUI extends JPanel {
             card.add(info, BorderLayout.WEST);
 
             // Panel form bayar
-            JPanel panelBayar = new JPanel(new GridLayout(2, 1, 5, 5));
+             JPanel panelBayar = new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
+            panelBayar.setBackground(new Color(255, 235, 202));
+            panelBayar.setMaximumSize(new Dimension(500, 80));
             JTextField tfJumlah = new JTextField();
+            tfJumlah.setMaximumSize(new Dimension(500, 80));
+            tfJumlah.setBackground(new Color(147, 83, 12));
             JButton btnBayar = new JButton("Bayar");
+            btnBayar.setMaximumSize(new Dimension(300, 250));
+            btnBayar.setBackground(new Color(153, 0, 0));
+            btnBayar.setForeground(new Color(225,235,202));
 
             btnBayar.addActionListener(e -> {
                 try {

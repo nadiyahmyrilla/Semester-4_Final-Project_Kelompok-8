@@ -25,22 +25,36 @@ public class PembelianControllerGUI extends JPanel {
 
     public PembelianControllerGUI() {
         setLayout(new BorderLayout(10, 10));
+        setBackground(new Color(255, 235, 202));
 
-        daftarBarangPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+ daftarBarangPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+        daftarBarangPanel.setBackground(new Color(255, 235, 202));
         JScrollPane scrollBarang = new JScrollPane(daftarBarangPanel);
+        scrollBarang.setBackground(new Color(255, 235, 202));
 
         daftarPembelianPanel = new JPanel();
+         daftarPembelianPanel.setBackground(new Color(255, 235, 202));
         daftarPembelianPanel.setLayout(new BoxLayout(daftarPembelianPanel, BoxLayout.Y_AXIS));
+        daftarPembelianPanel.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(153, 0, 0), 2),
+                    BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         JScrollPane scrollDaftar = new JScrollPane(daftarPembelianPanel);
-
+        scrollBarang.setBackground(new Color(255, 235, 202));
+        daftarPembelianPanel.setPreferredSize(new Dimension(300, 200));
         JPanel kananPanel = new JPanel(new BorderLayout(5, 5));
+        kananPanel.setBackground(new Color(255, 235, 202));
         JPanel bawahPanel = new JPanel(new BorderLayout(5, 5));
+        bawahPanel.setBackground(new Color(255, 235, 202));
 
         totalLabel = new JLabel("Total: Rp0");
         totalLabel.setHorizontalAlignment(SwingConstants.CENTER);
         totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         btnBayar = new JButton("Bayar");
+        btnBayar.setBackground(new Color(153, 0, 0));
+        btnBayar.setForeground(new Color(225, 235, 202));
+        btnBayar.setFont(new Font("DeVinne Txt BT", Font.BOLD, 16));
+        btnBayar.setPreferredSize(new Dimension(100, 50));
         btnBayar.addActionListener(e -> prosesPembelian());
 
         bawahPanel.add(totalLabel, BorderLayout.CENTER);
@@ -58,45 +72,60 @@ public class PembelianControllerGUI extends JPanel {
     private void tampilkanBarang() {
         BarangController bc = new BarangController();
         daftarBarangPanel.removeAll();
+        daftarBarangPanel.setLayout(new GridLayout(0, 4, 5, 5));
+
 
         for (Barang b : bc.getAllBarang()) {
-            JPanel itemPanel = new JPanel(new BorderLayout());
-            itemPanel.setBorder(BorderFactory.createTitledBorder(b.getNama()));
-            itemPanel.setBackground(Color.lightGray);
-            
-            // Untuk label dari gambar
+            JPanel card = new JPanel();
+            card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+            card.setBackground(new Color(255, 235, 202));
+            card.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(153, 0, 0), 2),
+                    BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
+                  // Label gambar
             JLabel labelGambar;
             try {
-                String path = "images/" + b.getFoto(); // pastikan ini file path yang valid
-                File file = new File(path);
-                if (!file.exists()) throw new Exception("File tidak ditemukan");
-
-                ImageIcon icon = new ImageIcon(path);
+                ImageIcon icon = new ImageIcon(getClass().getResource("/images/" + b.getFoto()));
                 Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
                 labelGambar = new JLabel(new ImageIcon(img));
             } catch (Exception e) {
                 labelGambar = new JLabel("No Image");
+                System.out.println("Gagal load gambar: " + e.getMessage());
             }
+            labelGambar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            // Informasi barang
-            JPanel infoPanel = new JPanel(new GridLayout(2, 1));
+            // Label nama
             JLabel labelNama = new JLabel(b.getNama());
-            JLabel labelHarga = new JLabel("Harga: Rp" + new DecimalFormat("#,###.00").format(b.getHargaBeli()));
-            infoPanel.add(labelNama);
-            infoPanel.add(labelHarga);
-            
+            labelNama.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            // Label harga
+            JLabel labelHarga = new JLabel("Harga: Rp" + new DecimalFormat("#,###.00").format(b.getHargaJual()));
+            labelHarga.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            // Tombol tambah
             JButton btnTambah = new JButton("Tambah");
+            btnTambah.setBackground(new Color(153, 0, 0));
+            btnTambah.setFont(new Font("DeVinne Txt BT", Font.PLAIN, 13));
+            btnTambah.setForeground(Color.WHITE);
+            btnTambah.setAlignmentX(Component.CENTER_ALIGNMENT);
             btnTambah.addActionListener(e -> tambahBarang(b));
 
-            itemPanel.add(labelGambar, BorderLayout.WEST);
-            itemPanel.add(labelHarga, BorderLayout.CENTER);
-            itemPanel.add(btnTambah, BorderLayout.EAST);
+            // Menambahkan komponen ke dalam kartu
+            card.add(labelGambar);
+            card.add(Box.createVerticalStrut(5));
+            card.add(labelNama);
+            card.add(labelHarga);
+            card.add(Box.createVerticalStrut(5));
+            card.add(btnTambah);
 
-            daftarBarangPanel.add(itemPanel);
+            // Menambahkan kartu ke panel utama
+            daftarBarangPanel.add(card);
+        
         }
 
-        revalidate();
-        repaint();
+       daftarBarangPanel.revalidate();
+        daftarBarangPanel.repaint();
     }
 
     private void tambahBarang(Barang barang) {
