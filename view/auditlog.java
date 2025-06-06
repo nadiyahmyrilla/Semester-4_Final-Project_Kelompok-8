@@ -19,18 +19,35 @@ import java.util.List;
 import java.awt.event.*;
 import javax.swing.table.TableRowSorter;
 
+import java.util.regex.Pattern;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.util.ArrayList;
+
+import javax.swing.RowFilter;
+import javax.swing.text.Document;
+
 public class auditlog extends javax.swing.JFrame {
 
     private DefaultTableModel tableModel;
     private AuditLogController logController = new AuditLogController();
-    private javax.swing.JButton btnFilter;
     private JTextField jTextField1 = new JTextField();
+    private DefaultTableModel dm;
+    private TableRowSorter<DefaultTableModel> tr;
+    private javax.swing.JTextField textField2 = new javax.swing.JTextField();
+    
     
     public auditlog() {
         initComponents();
         setupTable();
         loadLog();
         resizeLogo();
+        resizeIcon();
+        
+        dm = (DefaultTableModel) jTable1.getModel();
+        tr = new TableRowSorter<>(dm);
+        jTable1.setRowSorter(tr);
     }
     
     private void setupTable() {
@@ -38,6 +55,22 @@ public class auditlog extends javax.swing.JFrame {
         tableModel = new DefaultTableModel(new Object[]{"ID", "Tanggal", "Aksi"}, 0);
         jTable1.setModel(tableModel);
     }
+    
+    private void filter (String query)
+    {
+        TableRowSorter<DefaultTableModel> tr = (TableRowSorter<DefaultTableModel>) jTable1.getRowSorter();
+    
+    if (query == null || query.trim().isEmpty()) {
+        tr.setRowFilter(null); // Hapus filter jika query kosong
+    } else {
+        // [TEMPATKAN KODE FILTER DI SINI]
+        List<RowFilter<Object, Object>> filters = new ArrayList<>();
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            filters.add(RowFilter.regexFilter("(?i)" + query, i));
+        }
+        tr.setRowFilter(RowFilter.orFilter(filters));
+    }
+}
 
     private void loadLog() {
         // Kosongkan isi tabel terlebih dahulu
@@ -69,8 +102,9 @@ public class auditlog extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         textField1 = new java.awt.TextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         btnStock8 = new javax.swing.JButton();
         btnAudit8 = new javax.swing.JButton();
@@ -100,12 +134,13 @@ public class auditlog extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(363, 363, 363)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(323, 323, 323)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -139,17 +174,9 @@ public class auditlog extends javax.swing.JFrame {
         jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setBackground(new java.awt.Color(159, 2, 22));
-        jButton1.setText("Filter");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         textField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                textField1ActionPerformed(evt);
             }
         });
         textField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -158,45 +185,61 @@ public class auditlog extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Search...");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search.jpeg"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(textField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
-                                .addGap(174, 174, 174)
-                                .addComponent(jLabel1)))
-                        .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77))))
+                                .addGap(59, 59, 59)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGap(290, 290, 290)
+                                .addComponent(jLabel1))))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(366, 366, 366)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(67, 67, 67))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(27, 27, 27)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGap(244, 244, 244)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        jButton1.getAccessibleContext().setAccessibleDescription("");
 
         jPanel11.setBackground(new java.awt.Color(225, 194, 162));
 
@@ -293,7 +336,7 @@ public class auditlog extends javax.swing.JFrame {
                 .addComponent(btnStock8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66)
                 .addComponent(btnAudit8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -304,10 +347,11 @@ public class auditlog extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
-                    .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jDesktopPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,9 +370,15 @@ public class auditlog extends javax.swing.JFrame {
     Image image = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
     jLabel2.setIcon(new ImageIcon(image));
     
-    
 }
 
+    private void resizeIcon() {
+    ImageIcon icon = new ImageIcon(getClass().getResource("/images/Search.jpeg"));
+    Image image = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    jButton1.setIcon(new ImageIcon(image));
+    
+}
+    
     private void btnStock8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStock8ActionPerformed
         stok s = new stok();
         s.setVisible(true);   // TODO add your handling code here:
@@ -364,30 +414,19 @@ public class auditlog extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLogout8ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    
-    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-    jTable1.setRowSorter(sorter);
-    
-    String keyword = jTextField1.getText();
-    if (keyword.trim().length() == 0) {
-        sorter.setRowFilter(null);
-    } else {
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
-    }
-    System.out.println("Tombol diklik!");
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void textField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField1KeyReleased
-    var rowSorter = new TableRowSorter(jTable1.getModel());
-    rowSorter.setRowFilter(RowFilter.regexFilter(jTextField1.getText().trim()));
-    jTable1.setRowSorter(rowSorter);
+    if (textField1.getText() == null) return;
+    String query = textField1.getText().toLowerCase();
+    filter(query);
     }//GEN-LAST:event_textField1KeyReleased
+
+    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -433,6 +472,7 @@ public class auditlog extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
