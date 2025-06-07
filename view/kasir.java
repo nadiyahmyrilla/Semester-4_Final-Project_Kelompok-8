@@ -96,6 +96,11 @@ public class kasir extends javax.swing.JFrame {
         btnAudit3.setText("AUDIT");
         btnAudit3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnAudit3.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnAudit3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAudit3ActionPerformed(evt);
+            }
+        });
 
         btnKasir3.setBackground(new java.awt.Color(13, 163, 92));
         btnKasir3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
@@ -105,6 +110,11 @@ public class kasir extends javax.swing.JFrame {
         btnKasir3.setBorderPainted(false);
         btnKasir3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnKasir3.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnKasir3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKasir3ActionPerformed(evt);
+            }
+        });
 
         btnLaporan3.setBackground(new java.awt.Color(13, 163, 92));
         btnLaporan3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
@@ -112,6 +122,11 @@ public class kasir extends javax.swing.JFrame {
         btnLaporan3.setText("LAPORAN");
         btnLaporan3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnLaporan3.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnLaporan3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaporan3ActionPerformed(evt);
+            }
+        });
 
         btnLogout3.setBackground(new java.awt.Color(13, 163, 92));
         btnLogout3.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
@@ -145,11 +160,8 @@ public class kasir extends javax.swing.JFrame {
                     .addGroup(uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnLaporan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnStock3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         uASPBO1Layout.setVerticalGroup(
@@ -315,12 +327,24 @@ public class kasir extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnStock3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStock3ActionPerformed
-        // TODO add your handling code here:
+        new stok().setVisible(true);
     }//GEN-LAST:event_btnStock3ActionPerformed
 
     private void btnLogout3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogout3ActionPerformed
+
+    private void btnAudit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAudit3ActionPerformed
+        new auditlog().setVisible(true);
+    }//GEN-LAST:event_btnAudit3ActionPerformed
+
+    private void btnLaporan3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporan3ActionPerformed
+        new laporanKeuangan().setVisible(true);
+    }//GEN-LAST:event_btnLaporan3ActionPerformed
+
+    private void btnKasir3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKasir3ActionPerformed
+        new kasir().setVisible(true);
+    }//GEN-LAST:event_btnKasir3ActionPerformed
 
     private void resizeLogo() {
     ImageIcon icon = new ImageIcon(getClass().getResource("/asset/logo.png"));
