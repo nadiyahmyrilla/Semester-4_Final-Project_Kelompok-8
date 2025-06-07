@@ -190,6 +190,9 @@ public class PenjualanControllerGUI extends JPanel {
                     },
                     inputField).setVisible(true);
         }
+        new AuditLogController().catatLog(
+            "Tambah barang ke keranjang: " + barang.getNama());
+
     }
 
     private void updateDaftarPembelian() {
@@ -443,6 +446,9 @@ public class PenjualanControllerGUI extends JPanel {
         keranjang.clear();
         updateDaftarPembelian();
         tfNamaPelanggan.setText("");
+        new AuditLogController().catatLog(
+            "Penjualan cicilan oleh pelanggan: " + namaPelanggan);
+
     }
 
     private double hitungTotalPembelian() {
@@ -502,6 +508,10 @@ public class PenjualanControllerGUI extends JPanel {
                         new ActionListener[] { evt -> {
                         } }).setVisible(true);
             }
+        new AuditLogController().catatLog(
+            "Cetak struk PDF metode: " + metode + 
+            " untuk " + tfNamaPelanggan.getText().trim());
+
         } catch (Exception e) {
             e.printStackTrace();
             Window window = SwingUtilities.getWindowAncestor(this);
