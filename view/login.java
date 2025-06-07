@@ -28,6 +28,7 @@ public class login extends javax.swing.JFrame {
     public login() {
        initComponents();
        resizeLogo();
+       setBackground(new java.awt.Color(0, 0, 0, 0)); // Alpha = 0 untuk transparan total
     }
 
     @SuppressWarnings("unchecked")
@@ -35,51 +36,39 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel4 = new javax.swing.JPanel();
-        Header = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        uASPBO3 = new view.UASPBO();
+        jLabel2 = new javax.swing.JLabel();
         txtusername = new javax.swing.JTextField();
         txtpassword = new javax.swing.JTextField();
         Login = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        logo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        uASPBO1 = new view.UASPBO();
+        logo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        uASPBO2 = new view.UASPBO();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setUndecorated(true);
 
-        jPanel4.setBackground(new java.awt.Color(255, 235, 202));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setFont(new java.awt.Font("DeVinne Txt BT", 1, 12)); // NOI18N
-        jPanel4.setPreferredSize(new java.awt.Dimension(762, 432));
+        jPanel4.setOpaque(false);
+        jPanel4.setPreferredSize(new java.awt.Dimension(1080, 720));
 
-        Header.setBackground(new java.awt.Color(153, 0, 0));
+        uASPBO3.setBackground(new java.awt.Color(242, 146, 148));
+        uASPBO3.setRoundBottomRight(100);
 
-        jLabel1.setFont(new java.awt.Font("DeVinne Txt BT", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(228, 202, 152));
-        jLabel1.setText("Sistem Toko Bangunan BENING WORK");
+        jLabel2.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 235, 202));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("LOGIN");
 
-        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
-        Header.setLayout(HeaderLayout);
-        HeaderLayout.setHorizontalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HeaderLayout.createSequentialGroup()
-                .addGap(437, 437, 437)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        HeaderLayout.setVerticalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(16, 16, 16))
-        );
-
-        txtusername.setBackground(new java.awt.Color(147, 83, 12));
+        txtusername.setBackground(new java.awt.Color(237, 219, 195));
         txtusername.setFont(new java.awt.Font("DeVinne Txt BT", 1, 12)); // NOI18N
-        txtusername.setForeground(new java.awt.Color(255, 235, 202));
+        txtusername.setForeground(new java.awt.Color(159, 2, 22));
         txtusername.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtusername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,9 +76,9 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        txtpassword.setBackground(new java.awt.Color(147, 83, 12));
+        txtpassword.setBackground(new java.awt.Color(237, 219, 195));
         txtpassword.setFont(new java.awt.Font("DeVinne Txt BT", 1, 12)); // NOI18N
-        txtpassword.setForeground(new java.awt.Color(255, 235, 202));
+        txtpassword.setForeground(new java.awt.Color(159, 2, 22));
         txtpassword.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtpassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +86,8 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        Login.setBackground(new java.awt.Color(153, 0, 0));
+        Login.setBackground(new java.awt.Color(159, 2, 22));
+        Login.setFont(new java.awt.Font("Britannic Bold", 0, 18)); // NOI18N
         Login.setForeground(new java.awt.Color(255, 235, 202));
         Login.setText("Login");
         Login.addActionListener(new java.awt.event.ActionListener() {
@@ -106,123 +96,172 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(255, 235, 202));
+        jLabel3.setFont(new java.awt.Font("Britannic Bold", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 235, 202));
+        jLabel3.setText("Username");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+        jLabel4.setFont(new java.awt.Font("Britannic Bold", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 235, 202));
+        jLabel4.setText("Password");
+
+        javax.swing.GroupLayout uASPBO3Layout = new javax.swing.GroupLayout(uASPBO3);
+        uASPBO3.setLayout(uASPBO3Layout);
+        uASPBO3Layout.setHorizontalGroup(
+            uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(uASPBO3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(219, 219, 219))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(165, 165, 165))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO3Layout.createSequentialGroup()
+                .addContainerGap(121, Short.MAX_VALUE)
+                .addGroup(uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(109, 109, 109))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 84, Short.MAX_VALUE)
+        uASPBO3Layout.setVerticalGroup(
+            uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO3Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jLabel2)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel3)
+                .addGap(15, 15, 15)
+                .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4)
+                .addGap(15, 15, 15)
+                .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("DeVinne Txt BT", 1, 18)); // NOI18N
-        jLabel2.setText("Masukan Username dan Password  untuk Login");
+        uASPBO1.setBackground(new java.awt.Color(255, 235, 202));
+        uASPBO1.setPreferredSize(new java.awt.Dimension(1080, 600));
+        uASPBO1.setRoundBottomLeft(100);
 
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
-        logo.setPreferredSize(new java.awt.Dimension(770, 500));
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/logo_merah.png"))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("DeVinne Txt BT", 0, 18)); // NOI18N
-        jLabel3.setText("Username: ");
+        jPanel1.setLayout(new java.awt.CardLayout());
 
-        jLabel4.setFont(new java.awt.Font("DeVinne Txt BT", 0, 18)); // NOI18N
-        jLabel4.setText("Password:");
+        javax.swing.GroupLayout uASPBO1Layout = new javax.swing.GroupLayout(uASPBO1);
+        uASPBO1.setLayout(uASPBO1Layout);
+        uASPBO1Layout.setHorizontalGroup(
+            uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(uASPBO1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1348, 1348, 1348)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        uASPBO1Layout.setVerticalGroup(
+            uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(uASPBO1Layout.createSequentialGroup()
+                .addGap(128, 128, 128)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
+        );
+
+        uASPBO2.setBackground(new java.awt.Color(216, 46, 48));
+        uASPBO2.setRoundTopLeft(100);
+        uASPBO2.setRoundTopRight(100);
+
+        jLabel1.setFont(new java.awt.Font("Calisto MT", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(228, 202, 152));
+        jLabel1.setText("Sistem Toko Bangunan");
+
+        jLabel5.setBackground(new java.awt.Color(237, 219, 195));
+        jLabel5.setFont(new java.awt.Font("Calisto MT", 1, 48)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(237, 219, 195));
+        jLabel5.setText("BENING WORK");
+
+        javax.swing.GroupLayout uASPBO2Layout = new javax.swing.GroupLayout(uASPBO2);
+        uASPBO2.setLayout(uASPBO2Layout);
+        uASPBO2Layout.setHorizontalGroup(
+            uASPBO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(uASPBO2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(410, 410, 410))
+        );
+        uASPBO2Layout.setVerticalGroup(
+            uASPBO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(uASPBO2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
-                .addComponent(jLabel2)
-                .addGap(176, 176, 176))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(uASPBO2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(202, Short.MAX_VALUE))))
+                        .addComponent(uASPBO1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 555, Short.MAX_VALUE))))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 521, Short.MAX_VALUE)
+                    .addComponent(uASPBO3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(23, 23, 23)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(174, 174, 174))
+                .addComponent(uASPBO2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(uASPBO1, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addContainerGap(128, Short.MAX_VALUE)
+                    .addComponent(uASPBO3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 714, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void resizeLogo(){
-   URL imageURL = getClass().getResource("/img/logo.png");
-if (imageURL != null) {
-    ImageIcon icon = new ImageIcon(imageURL);
-    Image img = icon.getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH);
-    logo.setIcon(new ImageIcon(img));
-    logo.setPreferredSize(new Dimension(770, 500));
-    logo.revalidate();
-} else {
-    System.out.println("Gambar tidak ditemukan!");
-}
-
-}
-    private void txtusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtusernameActionPerformed
-
-    private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpasswordActionPerformed
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-       String username = txtusername.getText();
+        String username = txtusername.getText();
         String password = txtpassword.getText();
 
         UserController userController = new UserController();
@@ -235,7 +274,7 @@ if (imageURL != null) {
                 new String[]{"Continue"},
                 new ActionListener[]{
                     e -> {
-                        new DashboardView();
+                        new kasir().setVisible(true);
                         dispose();
                     }
                 }
@@ -250,9 +289,29 @@ if (imageURL != null) {
                 }
             ).setVisible(true);
         }
-    
+
     }//GEN-LAST:event_LoginActionPerformed
 
+    private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpasswordActionPerformed
+
+    private void txtusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtusernameActionPerformed
+private void resizeLogo(){
+   URL imageURL = getClass().getResource("/asset/logo_merah.png");
+if (imageURL != null) {
+    ImageIcon icon = new ImageIcon(imageURL);
+    Image img = icon.getImage().getScaledInstance(400, 250, Image.SCALE_SMOOTH);
+    logo.setIcon(new ImageIcon(img));
+    logo.setPreferredSize(new Dimension(770, 500));
+    logo.revalidate();
+} else {
+    System.out.println("Gambar tidak ditemukan!");
+}
+
+}
     /**
      * @param args the command line arguments
      */
@@ -289,16 +348,19 @@ if (imageURL != null) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Header;
     private javax.swing.JButton Login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel logo;
     private javax.swing.JTextField txtpassword;
     private javax.swing.JTextField txtusername;
+    private view.UASPBO uASPBO1;
+    private view.UASPBO uASPBO2;
+    private view.UASPBO uASPBO3;
     // End of variables declaration//GEN-END:variables
 }
