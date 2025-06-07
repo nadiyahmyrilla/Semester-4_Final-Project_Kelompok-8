@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableModel;
 
 public class stok extends javax.swing.JFrame {
 
@@ -29,6 +30,9 @@ public class stok extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldStok;
     private javax.swing.JButton JButton2;
     private int Id = 1;
+    
+    private DefaultTableModel dm;
+    private TableRowSorter<DefaultTableModel> tr;
     
     public stok() {
         initUI();
@@ -41,6 +45,21 @@ public class stok extends javax.swing.JFrame {
         textFieldStok = jTextField3;
     }
     
+    private void filter (String query)
+    {
+        TableRowSorter<DefaultTableModel> tr = (TableRowSorter<DefaultTableModel>) jTable1.getRowSorter();
+    
+    if (query == null || query.trim().isEmpty()) {
+        tr.setRowFilter(null); // Hapus filter jika query kosong
+    } else {
+        // [TEMPATKAN KODE FILTER DI SINI]
+        List<RowFilter<Object, Object>> filters = new ArrayList<>();
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            filters.add(RowFilter.regexFilter("(?i)" + query, i));
+        }
+        tr.setRowFilter(RowFilter.orFilter(filters));
+    }
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,6 +82,9 @@ public class stok extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        textField1 = new java.awt.TextField();
         jPanel12 = new javax.swing.JPanel();
         btnStock9 = new javax.swing.JButton();
         btnAudit9 = new javax.swing.JButton();
@@ -228,6 +250,26 @@ public class stok extends javax.swing.JFrame {
                 .addGap(41, 41, 41))
         );
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search.jpeg"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Search...");
+
+        textField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textField1ActionPerformed(evt);
+            }
+        });
+        textField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textField1KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -242,8 +284,17 @@ public class stok extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                         .addGap(55, 55, 55)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(62, 62, 62))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(62, 62, 62))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +307,12 @@ public class stok extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)
                         .addGap(51, 51, 51))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
+                        .addGap(134, 134, 134)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(165, 165, 165))))
         );
@@ -437,6 +493,20 @@ public class stok extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLogout9ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField1ActionPerformed
+
+    private void textField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField1KeyReleased
+        if (textField1.getText() == null) return;
+        String query = textField1.getText().toLowerCase();
+        filter(query);
+    }//GEN-LAST:event_textField1KeyReleased
+
     private void initUI() {
         String[] columnNames = {"ID", "Nama", "Harga Beli", "Harga Jual", "Stok"};
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -471,6 +541,9 @@ public class stok extends javax.swing.JFrame {
     }
 
     jTable1.setModel(model);
+    
+    TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+    jTable1.setRowSorter(sorter);
 }
     
     // Tambahan fungsi untuk mengaktifkan tombol
@@ -550,6 +623,7 @@ private void aktifkanTombol() {
     private javax.swing.JButton btnLaporan8;
     private javax.swing.JButton btnLogout9;
     private javax.swing.JButton btnStock9;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -560,6 +634,7 @@ private void aktifkanTombol() {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
@@ -569,6 +644,7 @@ private void aktifkanTombol() {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }
 
