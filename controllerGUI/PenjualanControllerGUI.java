@@ -382,6 +382,8 @@ public class PenjualanControllerGUI extends JPanel {
                                     keranjang.clear();
                                     updateDaftarPembelian();
                                     tfNamaPelanggan.setText("");
+                                    new AuditLogController().catatLog(
+                                      "Penjualan tunai oleh pelanggan: " + tfNamaPelanggan.getText().trim());
                                 } else {
                                     new BlurPopupDialog(
                                             frame,
@@ -405,6 +407,8 @@ public class PenjualanControllerGUI extends JPanel {
                         }
                 },
                 bayarField).setVisible(true);
+        
+
     }
 
     private void prosesCicilan(String namaPelanggan) {
