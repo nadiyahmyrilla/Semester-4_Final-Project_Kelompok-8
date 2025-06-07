@@ -41,7 +41,7 @@ public class home extends javax.swing.JFrame {
         btnLogout3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         uASPBO2 = new view.UASPBO();
-        contentPanel = new javax.swing.JPanel();
+        uASPBO3 = new view.UASPBO();
         uASPBO4 = new view.UASPBO();
         jLabel2 = new javax.swing.JLabel();
 
@@ -143,11 +143,8 @@ public class home extends javax.swing.JFrame {
                     .addGroup(uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnLaporan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnStock3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         uASPBO1Layout.setVerticalGroup(
@@ -172,24 +169,35 @@ public class home extends javax.swing.JFrame {
         uASPBO2.setRoundBottomLeft(100);
         uASPBO2.setRoundBottomRight(100);
 
-        contentPanel.setBackground(new java.awt.Color(255, 235, 202));
-        contentPanel.setLayout(new java.awt.CardLayout());
+        uASPBO3.setRoundBottomLeft(100);
+        uASPBO3.setRoundBottomRight(100);
+
+        javax.swing.GroupLayout uASPBO3Layout = new javax.swing.GroupLayout(uASPBO3);
+        uASPBO3.setLayout(uASPBO3Layout);
+        uASPBO3Layout.setHorizontalGroup(
+            uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 812, Short.MAX_VALUE)
+        );
+        uASPBO3Layout.setVerticalGroup(
+            uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 485, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout uASPBO2Layout = new javax.swing.GroupLayout(uASPBO2);
         uASPBO2.setLayout(uASPBO2Layout);
         uASPBO2Layout.setHorizontalGroup(
             uASPBO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(uASPBO2Layout.createSequentialGroup()
-                .addGap(261, 261, 261)
-                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO2Layout.createSequentialGroup()
+                .addContainerGap(262, Short.MAX_VALUE)
+                .addComponent(uASPBO3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         uASPBO2Layout.setVerticalGroup(
             uASPBO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(uASPBO2Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                .addContainerGap()
+                .addComponent(uASPBO3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         uASPBO4.setBackground(new java.awt.Color(216, 46, 48));
@@ -319,12 +327,12 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton btnLaporan3;
     private javax.swing.JButton btnLogout3;
     private javax.swing.JButton btnStock3;
-    private javax.swing.JPanel contentPanel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private view.UASPBO uASPBO1;
     private view.UASPBO uASPBO2;
+    private view.UASPBO uASPBO3;
     private view.UASPBO uASPBO4;
     // End of variables declaration//GEN-END:variables
 
