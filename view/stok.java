@@ -552,35 +552,35 @@ private void aktifkanTombol() {
     // Tombol Tambah Barang
     jButton2.addActionListener(new java.awt.event.ActionListener() {
     public void actionPerformed(java.awt.event.ActionEvent evt){
-        String nama = jTextField3.getText();
-        String hargaBeli = jTextField2.getText();
-        String stok = jTextField1.getText();
+        String nama = jTextField3.getText().trim();
+        String hargaBeliText = jTextField2.getText().trim();
+        String stokText = jTextField1.getText().trim();
 
-        if (nama.isEmpty() || hargaBeli.isEmpty() || stok.isEmpty()) {
+        if (nama.isEmpty() || hargaBeliText.isEmpty() || stokText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Harap isi semua kolom terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         } 
         
         try {
-            double harga = Double.parseDouble(hargaBeli);
-            int jumlahStok = Integer.parseInt(stok);
+            double hargaBeli = Double.parseDouble(hargaBeliText);
+            double parsedHarga = Double.parseDouble(hargaBeliText);
+            int stok = Integer.parseInt(stokText);
             
-            Barang barangBaru = new Barang ();
-            barangBaru.setNama(nama);
-            barangBaru.setHargaBeli(harga);
-            barangBaru.setHargaJual(harga * 1.15);
-            barangBaru.setStok(jumlahStok);
+            double hargaJual = parsedHarga * 1.15;
             
             BarangController controller = new BarangController();
-            controller.tambahBarang(barangBaru);
+            boolean success = controller.tambahBarang(nama, hargaBeli, hargaJual, stok, "");
            
+            if (success) {
             jTextField3.setText("");
             jTextField2.setText("");
             jTextField1.setText("");
-            
             tampilkanData();
-            
             JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan!");
+            
+            } else {
+                JOptionPane.showMessageDialog(null, "Gagal menambahkan barang!");
+            }
             } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Harga dan Stok harus berupa angka!");
         }
