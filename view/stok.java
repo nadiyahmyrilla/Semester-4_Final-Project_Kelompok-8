@@ -14,40 +14,33 @@ import model.Barang;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.io.IOException;
-import java.nio.file.StandardCopyOption;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableRowSorter;
 
 public class stok extends javax.swing.JFrame {
 
     private JTable table;
     private DefaultTableModel tableModel;
-    private JLabel jLabelFoto;
-    private String pathFotoTerpilih = "";
-    private javax.swing.ImageIcon selectedImage;
-    private javax.swing.JButton buttonPilihFoto;
-    private File selectedImagesFile;
-    private JTextField textFieldNama;
-    private JTextField textFieldHargaBeli;
-    private JTextField textFieldStok;
+    private DefaultTableModel model;
+    private javax.swing.JTextField textFieldHargaBeli;
+    private javax.swing.JTextField textFieldStok;
+    private javax.swing.JButton JButton2;
+    private int Id = 1;
     
     public stok() {
-        setTitle("Stok Barang");
-        setSize(700, 400);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
         initUI();
         initComponents();
         tampilkanData();
         resizeLogo();
         aktifkanTombol();
+        
+        textFieldHargaBeli = jTextField2;
+        textFieldStok = jTextField3;
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -66,8 +59,6 @@ public class stok extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -133,13 +124,13 @@ public class stok extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nama", "Harga Beli", "Harga Jual", "Stok", "Foto"
+                "ID", "Nama", "Harga Beli", "Harga Jual", "Stok"
             }
         ));
         jTable1.setOpaque(false);
@@ -159,17 +150,6 @@ public class stok extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Stok :");
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Pilih Gambar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Belum ada gambar");
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setText("Tambah Barang");
@@ -211,19 +191,18 @@ public class stok extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(52, 52, 52))
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 268, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,16 +223,9 @@ public class stok extends javax.swing.JFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(jButton2)
-                .addContainerGap())
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -268,7 +240,7 @@ public class stok extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                         .addGap(55, 55, 55)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(62, 62, 62))))
@@ -414,10 +386,6 @@ public class stok extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -485,151 +453,66 @@ public class stok extends javax.swing.JFrame {
 
     private void tampilkanData() {
     // Buat model tabel baru dengan kolom yang sesuai
-    DefaultTableModel model = new DefaultTableModel(
-        new Object[]{"ID", "Nama", "Harga Beli", "Harga Jual", "Stok", "Foto", "Nama File"}, 0
-    ) {
-        // Supaya kolom gambar bisa menampilkan ImageIcon
-        @Override
-        public Class<?> getColumnClass(int column) {
-            if (column == 5) return ImageIcon.class;
-            return Object.class;
-        }
-    };
+    model = new DefaultTableModel(
+        new Object[]{"ID", "Nama", "Harga Beli", "Harga Jual", "Stok"}, 0
+    );
 
-    // Ambil data barang
     BarangController controller = new BarangController();
     List<Barang> listBarang = controller.getAllBarang();
 
     for (Barang b : listBarang) {
-        ImageIcon icon = null;
-        String namaFile = b.getFoto();
-
-    if (namaFile != null && !namaFile.trim().isEmpty() && !namaFile.equalsIgnoreCase("null")) {
-        File fileGambar = new File("images/" + namaFile);
-    if (fileGambar.exists()) {
-        try {
-            Image image = new ImageIcon(fileGambar.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-            icon = new ImageIcon(image); 
-        } catch (Exception e) {
-            System.out.println("Gagal memuat gambar" + fileGambar.getPath());
-        }
-        } else {
-            System.out.println("File tidak ditemukan: " + fileGambar.getPath());
-        }
-    }
-
         model.addRow(new Object[]{
             b.getId(),
             b.getNama(),
             b.getHargaBeli(),
             b.getHargaJual(),
-            b.getStok(),
-            icon,
-            namaFile,
+            b.getStok()
         });
     }
 
-    // Tampilkan ke tabel
     jTable1.setModel(model);
-    jTable1.setRowHeight(70); // Sesuaikan agar gambar tidak terpotong
 }
     
     // Tambahan fungsi untuk mengaktifkan tombol
 private void aktifkanTombol() {
-
-    // Tombol Pilih Gambar
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        JFileChooser fileChooser = new JFileChooser();
-
-        // Filter file gambar
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Image Files", "jpg", "jpeg", "png", "gif"
-        );
-        fileChooser.setFileFilter(filter);
-
-        int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            // Ambil file yang dipilih
-            java.io.File file = fileChooser.getSelectedFile();
-            String path = file.getAbsolutePath();
-
-            // Simpan path ke variabel global (misalnya)
-            pathFotoTerpilih = path;
-            selectedImagesFile = file;
-
-            // Tampilkan gambar di Label
-            Image img = new ImageIcon(path).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            jLabelFoto.setIcon(new ImageIcon(img));
-            
-            jLabel9.setText(file.getName());
-        }
-    }
-});
-
-
-
+    
     // Tombol Tambah Barang
     jButton2.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        // Ambil data dari input
-        String nama = textFieldNama.getText();
-        String hargaBeliText = textFieldHargaBeli.getText();
-        String stokText = textFieldStok.getText();
+    public void actionPerformed(java.awt.event.ActionEvent evt){
+        String nama = jTextField3.getText();
+        String hargaBeli = jTextField2.getText();
+        String stok = jTextField1.getText();
 
-        if (nama.isEmpty() || hargaBeliText.isEmpty() || stokText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Harap isi semua kolom terlebih dahulu!");
+        if (nama.isEmpty() || hargaBeli.isEmpty() || stok.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap isi semua kolom terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
-        }
-
+        } 
+        
         try {
-            double harga = Double.parseDouble(hargaBeliText);
-            double hargaJual = harga * 1.15; // Hitung harga jual 15% lebih mahal
-            int jumlahStok = Integer.parseInt(stokText);
-
-            // Buat objek Barang
-            Barang barangBaru = new Barang();
+            double harga = Double.parseDouble(hargaBeli);
+            int jumlahStok = Integer.parseInt(stok);
+            
+            Barang barangBaru = new Barang ();
             barangBaru.setNama(nama);
             barangBaru.setHargaBeli(harga);
+            barangBaru.setHargaJual(harga * 1.15);
             barangBaru.setStok(jumlahStok);
-            barangBaru.setHargaJual(hargaJual); // Tambahkan ini!
             
-            // Jika gambar dipilih, salin file ke folder images/
-if (pathFotoTerpilih != null && !pathFotoTerpilih.isEmpty()) {
-    File sourceFile = new File(pathFotoTerpilih);
-    String namaFile = sourceFile.getName(); // ← nama file asli
-    File targetFile = new File("images/" + namaFile);
-
-    try {
-        Files.copy(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        barangBaru.setFoto(namaFile); // ← simpan nama file asli ke database
-    } catch (IOException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Gagal menyimpan gambar.");
-        return;
-    }
-} else {
-    barangBaru.setFoto(""); // Kosongkan jika tidak ada gambar
-}
-            
-            // Simpan
             BarangController controller = new BarangController();
             controller.tambahBarang(barangBaru);
-
-            // Bersihkan input
-            textFieldNama.setText("");
-            textFieldHargaBeli.setText("");
-            textFieldStok.setText("");
-            pathFotoTerpilih ="";
-
+           
+            jTextField3.setText("");
+            jTextField2.setText("");
+            jTextField1.setText("");
+            
             tampilkanData();
+            
             JOptionPane.showMessageDialog(null, "Barang berhasil ditambahkan!");
-
-        } catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Harga dan Stok harus berupa angka!");
         }
     }
-});
+    });
 }
 
     public static void main(String args[]) {
@@ -662,20 +545,13 @@ if (pathFotoTerpilih != null && !pathFotoTerpilih.isEmpty()) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAudit8;
     private javax.swing.JButton btnAudit9;
-    private javax.swing.JButton btnKasir8;
     private javax.swing.JButton btnKasir9;
-    private javax.swing.JButton btnLaporan7;
     private javax.swing.JButton btnLaporan8;
-    private javax.swing.JButton btnLogout8;
     private javax.swing.JButton btnLogout9;
-    private javax.swing.JButton btnStock8;
     private javax.swing.JButton btnStock9;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -684,9 +560,7 @@ if (pathFotoTerpilih != null && !pathFotoTerpilih.isEmpty()) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
