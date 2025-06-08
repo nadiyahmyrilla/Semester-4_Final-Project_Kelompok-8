@@ -9,7 +9,7 @@ import java.awt.*;
 import view.auditlog;
 import view.kasir;
 import view.laporanKeuangan;
-import view.stok;
+import view.stock;
 
 public class home extends javax.swing.JFrame {
     
@@ -20,7 +20,18 @@ public class home extends javax.swing.JFrame {
         initComponents();
         resizeLogo();
         // Tambahkan ini setelah initComponents()
-        setBackground(new java.awt.Color(0, 0, 0, 0)); // Alpha = 0 untuk transparan total
+        setBackground(new java.awt.Color(0, 0, 0, 0));
+        
+        cardLayout = (CardLayout) mainPanel.getLayout();
+        
+        mainPanel.add(new kasir(),"Kasir");
+        mainPanel.add(new laporanKeuangan(),"Laporan");
+        mainPanel.add(new stock(),"Stock");
+        mainPanel.add(new auditlog(),"Audit");
+
+        
+         cardLayout.show(mainPanel, "Kasir");
+
     }
 
     /**
@@ -41,7 +52,7 @@ public class home extends javax.swing.JFrame {
         btnLogout3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         uASPBO2 = new view.UASPBO();
-        uASPBO3 = new view.UASPBO();
+        mainPanel = new view.UASPBO();
         uASPBO4 = new view.UASPBO();
         jLabel2 = new javax.swing.JLabel();
 
@@ -169,19 +180,9 @@ public class home extends javax.swing.JFrame {
         uASPBO2.setRoundBottomLeft(100);
         uASPBO2.setRoundBottomRight(100);
 
-        uASPBO3.setRoundBottomLeft(100);
-        uASPBO3.setRoundBottomRight(100);
-
-        javax.swing.GroupLayout uASPBO3Layout = new javax.swing.GroupLayout(uASPBO3);
-        uASPBO3.setLayout(uASPBO3Layout);
-        uASPBO3Layout.setHorizontalGroup(
-            uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 812, Short.MAX_VALUE)
-        );
-        uASPBO3Layout.setVerticalGroup(
-            uASPBO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
-        );
+        mainPanel.setRoundBottomLeft(100);
+        mainPanel.setRoundBottomRight(100);
+        mainPanel.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout uASPBO2Layout = new javax.swing.GroupLayout(uASPBO2);
         uASPBO2.setLayout(uASPBO2Layout);
@@ -189,14 +190,14 @@ public class home extends javax.swing.JFrame {
             uASPBO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO2Layout.createSequentialGroup()
                 .addContainerGap(262, Short.MAX_VALUE)
-                .addComponent(uASPBO3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         uASPBO2Layout.setVerticalGroup(
             uASPBO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(uASPBO2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(uASPBO3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -223,9 +224,9 @@ public class home extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(uASPBO1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(259, 259, 259)
+                .addGap(241, 241, 241)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 272, Short.MAX_VALUE))
+                .addGap(0, 290, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(uASPBO2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,23 +262,23 @@ public class home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStock3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStock3ActionPerformed
-        new stok().setVisible(true);
+        cardLayout.show(mainPanel,"Stock");
     }//GEN-LAST:event_btnStock3ActionPerformed
 
     private void btnLogout3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout3ActionPerformed
-        // TODO add your handling code here:
+        new login().setVisible(true);
     }//GEN-LAST:event_btnLogout3ActionPerformed
 
     private void btnAudit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAudit3ActionPerformed
-        new auditlog().setVisible(true);
+        cardLayout.show(mainPanel,"Audit");
     }//GEN-LAST:event_btnAudit3ActionPerformed
 
     private void btnLaporan3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporan3ActionPerformed
-        new laporanKeuangan().setVisible(true);
+       cardLayout.show(mainPanel,"Laporan");
     }//GEN-LAST:event_btnLaporan3ActionPerformed
 
     private void btnKasir3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKasir3ActionPerformed
-        new kasir().setVisible(true);
+        cardLayout.show(mainPanel,"Kasir");
 
     }//GEN-LAST:event_btnKasir3ActionPerformed
 
@@ -330,9 +331,9 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
+    private view.UASPBO mainPanel;
     private view.UASPBO uASPBO1;
     private view.UASPBO uASPBO2;
-    private view.UASPBO uASPBO3;
     private view.UASPBO uASPBO4;
     // End of variables declaration//GEN-END:variables
 
