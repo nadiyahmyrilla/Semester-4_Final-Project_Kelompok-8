@@ -10,6 +10,8 @@ package view;
  */
 
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import view.login;
 
 public class opening2 extends javax.swing.JFrame {
 
@@ -18,7 +20,51 @@ public class opening2 extends javax.swing.JFrame {
      */
     public opening2() {
         initComponents();
+        startLoading();
     }
+
+    private void startLoading() {
+        new Thread(() -> {
+            opening2 sp = opening2.this; 
+            sp.setVisible(true);
+
+        try {
+            for (int i = 0; i <= 100; i++) {
+            Thread.sleep(100);
+            sp.LoadingValue.setText(i + "%");
+            
+            if (i==10){ 
+            sp.LoadingLabel.setText("Turning On Modules...");
+            }
+
+            if (i==20){
+            sp.LoadingLabel.setText("Loading Modules...");
+            }
+
+            if (i==50) {
+            sp.LoadingLabel.setText("Connecting to Database..."); 
+            }
+
+            if (i==70){ 
+            sp.LoadingLabel.setText("Connecting Successful!");
+            }
+
+            if (i==80){ 
+            sp.LoadingLabel.setText("Launching Application");
+            }
+
+            sp.LoadingBar.setValue(i);
+        }
+
+            } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            } 
+
+            dispose();
+            new login().setVisible(true);
+            }).start();
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,35 +151,10 @@ public class opening2 extends javax.swing.JFrame {
         }
         //</editor-fold>
            
-        opening2 sp = new opening2();
-        sp.setVisible(true);
-        
-        try {
-            for (int i=0; i<100 ; i++) {
-            Thread.sleep(100);
-            sp.LoadingValue.setText(i + "%");
-            
-            if ( i==10 ) {
-                sp.LoadingLabel.setText("Turning On Modules...");
-            }
-            if ( i==20 ) {
-                sp.LoadingLabel.setText("Loading Modules...");
-            }
-            if ( i==50 ) {
-                sp.LoadingLabel.setText("Connecting to Database...");
-            }
-            if ( i==70 ) {
-                sp.LoadingLabel.setText("Connecting Successful !");
-            }
-            if ( i==80 ) {
-                sp.LoadingLabel.setText("Launching Application");
-            }
-            sp.LoadingBar.setValue(i);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
+        java.awt.EventQueue.invokeLater(() -> {
+            new opening2().setVisible(true);
+        });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BackGroundPanel;
