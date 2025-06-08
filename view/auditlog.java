@@ -1,13 +1,10 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
 
-/**
- *
- * @author aurel
- */
+
 import controller.AuditLogController;
 import model.AuditLog;
 
@@ -29,18 +26,21 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.Document;
 
-public class auditlog extends javax.swing.JFrame {
+public class auditlog extends javax.swing.JPanel {
 
-    private DefaultTableModel tableModel;
+    /**
+     * Creates new form panel
+     */
+     private DefaultTableModel tableModel;
     private AuditLogController logController = new AuditLogController();
     private JTextField jTextField1 = new JTextField();
     private DefaultTableModel dm;
     private TableRowSorter<DefaultTableModel> tr;
     private javax.swing.JTextField textField2 = new javax.swing.JTextField();
     
-    
     public auditlog() {
-        initComponents();
+      initComponents();
+      setBackground(new java.awt.Color(0, 0, 0, 0));
         setupTable();
         loadLog();
         
@@ -117,6 +117,7 @@ public class auditlog extends javax.swing.JFrame {
         }
     }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,45 +127,34 @@ public class auditlog extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        uASPBO2 = new view.UASPBO();
+        uASPBO1 = new view.UASPBO();
+        logging = new view.UASPBO();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         uASPBO5 = new view.UASPBO();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
-        uASPBO1 = new view.UASPBO();
-        btnStock3 = new javax.swing.JButton();
-        btnAudit3 = new javax.swing.JButton();
-        btnKasir3 = new javax.swing.JButton();
-        btnLaporan3 = new javax.swing.JButton();
-        btnLogout3 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        uASPBO4 = new view.UASPBO();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(237, 219, 195));
-        setUndecorated(true);
+        uASPBO1.setBackground(new java.awt.Color(255, 235, 202));
+        uASPBO1.setPreferredSize(new java.awt.Dimension(812, 485));
+        uASPBO1.setRoundBottomLeft(100);
+        uASPBO1.setRoundBottomRight(100);
 
-        jPanel2.setBackground(new java.awt.Color(255, 153, 153));
-        jPanel2.setOpaque(false);
-        jPanel2.setPreferredSize(new java.awt.Dimension(1080, 720));
-
-        uASPBO2.setBackground(new java.awt.Color(255, 235, 202));
-        uASPBO2.setOpaque(true);
-        uASPBO2.setRoundBottomLeft(100);
-        uASPBO2.setRoundBottomRight(100);
-        uASPBO2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        logging.setBackground(new java.awt.Color(255, 235, 202));
+        logging.setOpaque(true);
+        logging.setRoundBottomLeft(100);
+        logging.setRoundBottomRight(100);
+        logging.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         jLabel4.setText("Search...");
-        uASPBO2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(513, 74, 60, 20));
+        logging.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(513, 74, 60, 20));
 
         jLabel1.setFont(new java.awt.Font("Britannic Bold", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 0, 0));
         jLabel1.setText("AUDIT LOGGING");
-        uASPBO2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 18, -1, -1));
+        logging.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 18, -1, -1));
 
         uASPBO5.setBackground(new java.awt.Color(255, 153, 153));
         uASPBO5.setRoundBottomLeft(50);
@@ -196,7 +186,7 @@ public class auditlog extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        uASPBO2.add(uASPBO5, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 104, -1, -1));
+        logging.add(uASPBO5, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 104, -1, -1));
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,233 +198,63 @@ public class auditlog extends javax.swing.JFrame {
                 jTextField2KeyReleased(evt);
             }
         });
-        uASPBO2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 200, 25));
-
-        uASPBO1.setBackground(new java.awt.Color(159, 2, 22));
-        uASPBO1.setPreferredSize(new java.awt.Dimension(300, 531));
-        uASPBO1.setRoundBottomLeft(100);
-        uASPBO1.setRoundBottomRight(100);
-        uASPBO1.setRoundTopLeft(100);
-        uASPBO1.setRoundTopRight(100);
-
-        btnStock3.setBackground(new java.awt.Color(13, 163, 92));
-        btnStock3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
-        btnStock3.setForeground(new java.awt.Color(255, 255, 255));
-        btnStock3.setText("STOCK");
-        btnStock3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnStock3.setPreferredSize(new java.awt.Dimension(150, 40));
-        btnStock3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStock3ActionPerformed(evt);
-            }
-        });
-
-        btnAudit3.setBackground(new java.awt.Color(13, 163, 92));
-        btnAudit3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
-        btnAudit3.setForeground(new java.awt.Color(255, 255, 255));
-        btnAudit3.setText("AUDIT");
-        btnAudit3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnAudit3.setPreferredSize(new java.awt.Dimension(150, 40));
-        btnAudit3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAudit3ActionPerformed(evt);
-            }
-        });
-
-        btnKasir3.setBackground(new java.awt.Color(13, 163, 92));
-        btnKasir3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
-        btnKasir3.setForeground(new java.awt.Color(255, 255, 255));
-        btnKasir3.setText("KASIR");
-        btnKasir3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
-        btnKasir3.setBorderPainted(false);
-        btnKasir3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnKasir3.setPreferredSize(new java.awt.Dimension(150, 40));
-        btnKasir3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKasir3ActionPerformed(evt);
-            }
-        });
-
-        btnLaporan3.setBackground(new java.awt.Color(13, 163, 92));
-        btnLaporan3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
-        btnLaporan3.setForeground(new java.awt.Color(255, 255, 255));
-        btnLaporan3.setText("LAPORAN");
-        btnLaporan3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnLaporan3.setPreferredSize(new java.awt.Dimension(150, 40));
-        btnLaporan3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLaporan3ActionPerformed(evt);
-            }
-        });
-
-        btnLogout3.setBackground(new java.awt.Color(13, 163, 92));
-        btnLogout3.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
-        btnLogout3.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogout3.setText("Log Out");
-        btnLogout3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnLogout3.setPreferredSize(new java.awt.Dimension(100, 30));
-        btnLogout3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogout3ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(237, 219, 195));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("MENU");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        logging.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 200, 25));
 
         javax.swing.GroupLayout uASPBO1Layout = new javax.swing.GroupLayout(uASPBO1);
         uASPBO1.setLayout(uASPBO1Layout);
         uASPBO1Layout.setHorizontalGroup(
             uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(uASPBO1Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(uASPBO1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnKasir3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnLaporan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnStock3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uASPBO1Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(logging, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         uASPBO1Layout.setVerticalGroup(
             uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(uASPBO1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnKasir3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(btnStock3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(btnLaporan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addComponent(logging, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        uASPBO4.setBackground(new java.awt.Color(216, 46, 48));
-        uASPBO4.setRoundTopLeft(100);
-        uASPBO4.setRoundTopRight(100);
-
-        javax.swing.GroupLayout uASPBO4Layout = new javax.swing.GroupLayout(uASPBO4);
-        uASPBO4.setLayout(uASPBO4Layout);
-        uASPBO4Layout.setHorizontalGroup(
-            uASPBO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        uASPBO4Layout.setVerticalGroup(
-            uASPBO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(uASPBO1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(uASPBO2, javax.swing.GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
-                    .addComponent(uASPBO4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(uASPBO1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(uASPBO4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(uASPBO2, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(uASPBO1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(uASPBO1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-
-
-    
-    private void btnStock3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStock3ActionPerformed
-        new stok().setVisible(true);
-    }//GEN-LAST:event_btnStock3ActionPerformed
-
-    private void btnAudit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAudit3ActionPerformed
-        new auditlog().setVisible(true);
-    }//GEN-LAST:event_btnAudit3ActionPerformed
-
-    private void btnKasir3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKasir3ActionPerformed
-        new kasir().setVisible(true);
-    }//GEN-LAST:event_btnKasir3ActionPerformed
-
-    private void btnLaporan3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporan3ActionPerformed
-        new laporanKeuangan().setVisible(true);
-    }//GEN-LAST:event_btnLaporan3ActionPerformed
-
-    private void btnLogout3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLogout3ActionPerformed
-
-    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {
-    if (jTextField2.getText() == null) return;
-    String query = jTextField2.getText().toLowerCase();
-    filter(query);
-}
-    
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> new auditlog().setVisible(true));
-    }
+    
+        private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {
+    if (jTextField2.getText() == null) return;
+    String query = jTextField2.getText().toLowerCase();
+    filter(query);
+        }
+        
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAudit3;
-    private javax.swing.JButton btnKasir3;
-    private javax.swing.JButton btnLaporan3;
-    private javax.swing.JButton btnLogout3;
-    private javax.swing.JButton btnStock3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
+    private view.UASPBO logging;
     private view.UASPBO uASPBO1;
-    private view.UASPBO uASPBO2;
-    private view.UASPBO uASPBO4;
     private view.UASPBO uASPBO5;
     // End of variables declaration//GEN-END:variables
 }
