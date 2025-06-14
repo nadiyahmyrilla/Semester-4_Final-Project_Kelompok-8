@@ -68,9 +68,10 @@
         <Container class="view.UASPBO" name="laporan">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="c3" green="db" red="ed" type="rgb"/>
+              <Color blue="ca" green="eb" red="ff" type="rgb"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
+            <Property name="roundBottomLeft" type="int" value="100"/>
             <Property name="roundBottomRight" type="int" value="100"/>
           </Properties>
 
@@ -105,9 +106,9 @@
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="74" max="32767" attributes="0"/>
-                          <Component id="uASPBO4" min="-2" pref="700" max="-2" attributes="0"/>
-                          <EmptySpace pref="38" max="32767" attributes="0"/>
+                          <EmptySpace pref="37" max="32767" attributes="0"/>
+                          <Component id="uASPBO4" min="-2" pref="740" max="-2" attributes="0"/>
+                          <EmptySpace pref="42" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

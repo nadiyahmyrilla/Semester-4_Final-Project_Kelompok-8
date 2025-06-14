@@ -17,38 +17,45 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.table.DefaultTableCellRenderer;
+
 public class laporanKeuangan extends javax.swing.JPanel {
+
     LaporanPenjualanControllerGUI laporanPenjualanGUI = new LaporanPenjualanControllerGUI();
     LaporanPembelianControllerGUI laporanPembelianGUI = new LaporanPembelianControllerGUI();
-    CetakLaporanControllerGUI cetakLaporanGUI = new CetakLaporanControllerGUI();
+    CetakLaporanControllerGUI cetakLaporanGUI = new CetakLaporanControllerGUI(this);
 
     /**
      * Creates new form panel
      */
     public laporanKeuangan() {
         initComponents();
-        
-        
-        jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        JLabel label = (JLabel) super.getTableCellRendererComponent(
-                table, value, isSelected, hasFocus, row, column);
-        label.setBackground(new Color(159, 2, 2));  // warna biru
-        label.setForeground(new Color(237,219,195)); // teks cream
-        label.setHorizontalAlignment(JLabel.CENTER); // opsional: teks di tengah
-        label.setFont(label.getFont().deriveFont(Font.BOLD)); // font tebal
-        label.setOpaque(true);                           // supaya background muncul
-        return label;
-    }
-});
-             // Buat latar form transparan (kalau didukung Look & Feel)
-        setBackground(new java.awt.Color(0, 0, 0, 0));
 
-        // Hilangkan grid di dalam tabel
-        jTable1.setShowGrid(false);
-        jTable1.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        jTable1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setHorizontalAlignment(SwingConstants.CENTER);
+                return label;
+            }
+        });
+
+        jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+                label.setBackground(new Color(159, 2, 2));  // warna biru
+                label.setForeground(new Color(237, 219, 195)); // teks cream
+                label.setHorizontalAlignment(JLabel.CENTER); // opsional: teks di tengah
+                label.setFont(label.getFont().deriveFont(Font.BOLD)); // font tebal
+                label.setOpaque(true);                           // supaya background muncul
+                return label;
+            }
+        });
+        // Buat latar form transparan (kalau didukung Look & Feel)
+        setBackground(new java.awt.Color(0, 0, 0, 0));
         jTable1.setOpaque(false);
         ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
 
@@ -57,7 +64,6 @@ public class laporanKeuangan extends javax.swing.JPanel {
         jScrollPane1.getViewport().setOpaque(false);
         jScrollPane1.setBorder(null);
         jScrollPane1.getViewport().setBorder(null);
-
 
         // Tampilkan laporan awal (penjualan)
         jButton2ActionPerformed(null);
@@ -92,8 +98,9 @@ public class laporanKeuangan extends javax.swing.JPanel {
         uASPBO1.setRoundBottomLeft(100);
         uASPBO1.setRoundBottomRight(100);
 
-        laporan.setBackground(new java.awt.Color(237, 219, 195));
+        laporan.setBackground(new java.awt.Color(255, 235, 202));
         laporan.setEnabled(false);
+        laporan.setRoundBottomLeft(100);
         laporan.setRoundBottomRight(100);
 
         jButton2.setBackground(new java.awt.Color(153, 0, 0));
@@ -187,9 +194,9 @@ public class laporanKeuangan extends javax.swing.JPanel {
                         .addGap(303, 303, 303))))
             .addGroup(laporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, laporanLayout.createSequentialGroup()
-                    .addContainerGap(74, Short.MAX_VALUE)
-                    .addComponent(uASPBO4, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(38, Short.MAX_VALUE)))
+                    .addContainerGap(37, Short.MAX_VALUE)
+                    .addComponent(uASPBO4, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(42, Short.MAX_VALUE)))
         );
         laporanLayout.setVerticalGroup(
             laporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,7 +265,7 @@ public class laporanKeuangan extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        new CetakLaporanControllerGUI().cetakLaporanKeuangan();
+        cetakLaporanGUI.cetakLaporanKeuangan();
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
