@@ -72,7 +72,7 @@ public class PembelianControllerGUI extends JPanel {
     private void tampilkanBarang() {
         BarangController bc = new BarangController();
         daftarBarangPanel.removeAll();
-        daftarBarangPanel.setLayout(new GridLayout(0, 4, 5, 5));
+        daftarBarangPanel.setLayout(new GridLayout(0, 3, 5, 5));
 
 
         for (Barang b : bc.getAllBarang()) {
@@ -177,12 +177,32 @@ public class PembelianControllerGUI extends JPanel {
             total += subtotal;
 
             JPanel itemPanel = new JPanel(new BorderLayout());
+                        itemPanel.setPreferredSize(new Dimension(300, 60)); // ukuran tetap
+            itemPanel.setMaximumSize(new Dimension(300, 60));
+            itemPanel.setLayout(new BorderLayout());
+            itemPanel.setBackground(new Color(255, 235, 202));
+            itemPanel.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY), // garis bawah
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+            
+            
             JLabel itemLabel = new JLabel(b.getNama() + " x" + jumlah + " = Rp" + new DecimalFormat("#,###.00").format(subtotal));
             itemLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+            itemLabel.setVerticalAlignment(JLabel.CENTER);
+            itemPanel.add(itemLabel, BorderLayout.CENTER);
 
-            JPanel tombolPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+             JPanel tombolPanel = new JPanel();
+            tombolPanel.setLayout(new GridLayout(2, 1, 5, 5));
+            tombolPanel.setOpaque(false);
+
             JButton btnEdit = new JButton("Edit");
+            btnEdit.setFont(new Font("Arial", Font.PLAIN, 11));
+            btnEdit.setBackground(new Color(200, 200, 200));
+
             JButton btnHapus = new JButton("Hapus");
+            btnHapus.setFont(new Font("Arial", Font.PLAIN, 11));
+            btnHapus.setBackground(new Color(200, 200, 200));
 
             btnEdit.addActionListener(e -> editJumlah(b));
             btnHapus.addActionListener(e -> {

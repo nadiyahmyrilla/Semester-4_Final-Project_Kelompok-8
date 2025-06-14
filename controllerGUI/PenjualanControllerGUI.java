@@ -18,6 +18,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
 public class PenjualanControllerGUI extends JPanel {
+
     private JPanel daftarBarangPanel, daftarPembelianPanel;
     private JLabel totalLabel;
     private JButton btnBayar;
@@ -50,7 +51,9 @@ public class PenjualanControllerGUI extends JPanel {
         atasPanel.setBackground(new Color(255, 235, 202));
         JLabel lblNama = new JLabel("Nama Pelanggan: ");
         tfNamaPelanggan = new JTextField();
-        tfNamaPelanggan.setBackground(new Color(147, 83, 12));
+        tfNamaPelanggan.setBackground(new Color(153, 0, 0));
+        tfNamaPelanggan.setForeground(new Color(255, 235, 202));
+        tfNamaPelanggan.setFont(tfNamaPelanggan.getFont().deriveFont(Font.BOLD));
         atasPanel.add(lblNama, BorderLayout.WEST);
         atasPanel.add(tfNamaPelanggan, BorderLayout.CENTER);
 
@@ -83,7 +86,7 @@ public class PenjualanControllerGUI extends JPanel {
     private void tampilkanBarang() {
         BarangController bc = new BarangController();
         daftarBarangPanel.removeAll();
-        daftarBarangPanel.setLayout(new GridLayout(0, 4, 5, 5));
+        daftarBarangPanel.setLayout(new GridLayout(0, 3, 5, 5));
 
         for (Barang b : bc.getAllBarang()) {
             JPanel card = new JPanel();
@@ -146,52 +149,54 @@ public class PenjualanControllerGUI extends JPanel {
                     frame,
                     "Tambah Barang",
                     "Masukkan jumlah untuk <b>" + barang.getNama() + "</b>:",
-                    new String[] { "OK", "Batal" },
-                    new ActionListener[] {
-                            e -> {
-                                String input = inputField.getText();
-                                if (input == null || input.isBlank())
-                                    return;
+                    new String[]{"OK", "Batal"},
+                    new ActionListener[]{
+                        e -> {
+                            String input = inputField.getText();
+                            if (input == null || input.isBlank()) {
+                                return;
+                            }
 
-                                try {
-                                    int jumlahInput = Integer.parseInt(input);
-                                    if (jumlahInput <= 0)
-                                        throw new NumberFormatException();
+                            try {
+                                int jumlahInput = Integer.parseInt(input);
+                                if (jumlahInput <= 0) {
+                                    throw new NumberFormatException();
+                                }
 
-                                    int jumlahSekarang = keranjang.getOrDefault(barang, 0);
-                                    int totalJumlah = jumlahSekarang + jumlahInput;
+                                int jumlahSekarang = keranjang.getOrDefault(barang, 0);
+                                int totalJumlah = jumlahSekarang + jumlahInput;
 
-                                    if (totalJumlah > barang.getStok()) {
-                                        new BlurPopupDialog(
-                                                frame,
-                                                "Stok Tidak Cukup",
-                                                "Jumlah yang dimasukkan melebihi stok tersedia (" + barang.getStok()
-                                                        + ").",
-                                                new String[] { "OK" },
-                                                new ActionListener[] { evt -> {
-                                                } }).setVisible(true);
-                                        return;
-                                    }
-
-                                    keranjang.put(barang, totalJumlah);
-                                    updateDaftarPembelian();
-                                } catch (NumberFormatException ex) {
+                                if (totalJumlah > barang.getStok()) {
                                     new BlurPopupDialog(
                                             frame,
-                                            "Jumlah Tidak Valid",
-                                            "Masukkan angka yang valid.",
-                                            new String[] { "OK" },
-                                            new ActionListener[] { evt -> {
-                                            } }).setVisible(true);
+                                            "Stok Tidak Cukup",
+                                            "Jumlah yang dimasukkan melebihi stok tersedia (" + barang.getStok()
+                                            + ").",
+                                            new String[]{"OK"},
+                                            new ActionListener[]{evt -> {
+                                                }}).setVisible(true);
+                                    return;
                                 }
-                            },
-                            e -> {
-                            } // Jika dibatalkan, tidak melakukan apa-apa
+
+                                keranjang.put(barang, totalJumlah);
+                                updateDaftarPembelian();
+                            } catch (NumberFormatException ex) {
+                                new BlurPopupDialog(
+                                        frame,
+                                        "Jumlah Tidak Valid",
+                                        "Masukkan angka yang valid.",
+                                        new String[]{"OK"},
+                                        new ActionListener[]{evt -> {
+                                            }}).setVisible(true);
+                            }
+                        },
+                        e -> {
+                        } // Jika dibatalkan, tidak melakukan apa-apa
                     },
                     inputField).setVisible(true);
         }
         new AuditLogController().catatLog(
-            "Tambah barang ke keranjang: " + barang.getNama());
+                "Tambah barang ke keranjang: " + barang.getNama());
 
     }
 
@@ -214,9 +219,9 @@ public class PenjualanControllerGUI extends JPanel {
                     BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY), // garis bawah
                     BorderFactory.createEmptyBorder(5, 10, 5, 10)));// padding dalam
 
-            String info = "<html><b>" + b.getNama() + "</b><br/>" +
-                    jumlah + " x Rp" + new DecimalFormat("#,###.00").format(b.getHargaJual()) +
-                    " = Rp" + new DecimalFormat("#,###.00").format(subtotal) + "</html>";
+            String info = "<html><b>" + b.getNama() + "</b><br/>"
+                    + jumlah + " x Rp" + new DecimalFormat("#,###.00").format(b.getHargaJual())
+                    + " = Rp" + new DecimalFormat("#,###.00").format(subtotal) + "</html>";
             JLabel itemLabel = new JLabel(info);
             itemLabel.setFont(new Font("Arial", Font.PLAIN, 12));
             itemLabel.setVerticalAlignment(JLabel.CENTER);
@@ -265,40 +270,40 @@ public class PenjualanControllerGUI extends JPanel {
                     frame,
                     "Edit Jumlah",
                     "Ubah jumlah untuk <b>" + barang.getNama() + "</b>:",
-                    new String[] { "OK", "Batal" },
-                    new ActionListener[] {
-                            e -> {
-                                try {
-                                    int jumlahBaru = Integer.parseInt(inputField.getText());
-                                    if (jumlahBaru <= 0) {
-                                        keranjang.remove(barang);
-                                    } else {
-                                        if (jumlahBaru > barang.getStok()) {
-                                            new BlurPopupDialog(
-                                                    frame,
-                                                    "Stok Tidak Cukup",
-                                                    "Jumlah yang dimasukkan melebihi stok tersedia (" + barang.getStok()
-                                                            + ").",
-                                                    new String[] { "OK" },
-                                                    new ActionListener[] { evt -> {
-                                                    } }).setVisible(true);
-                                            return;
-                                        }
-                                        keranjang.put(barang, jumlahBaru);
+                    new String[]{"OK", "Batal"},
+                    new ActionListener[]{
+                        e -> {
+                            try {
+                                int jumlahBaru = Integer.parseInt(inputField.getText());
+                                if (jumlahBaru <= 0) {
+                                    keranjang.remove(barang);
+                                } else {
+                                    if (jumlahBaru > barang.getStok()) {
+                                        new BlurPopupDialog(
+                                                frame,
+                                                "Stok Tidak Cukup",
+                                                "Jumlah yang dimasukkan melebihi stok tersedia (" + barang.getStok()
+                                                + ").",
+                                                new String[]{"OK"},
+                                                new ActionListener[]{evt -> {
+                                                    }}).setVisible(true);
+                                        return;
                                     }
-                                    updateDaftarPembelian();
-                                } catch (NumberFormatException ex) {
-                                    new BlurPopupDialog(
-                                            frame,
-                                            "Jumlah Tidak Valid",
-                                            "Masukkan angka yang valid.",
-                                            new String[] { "OK" },
-                                            new ActionListener[] { evt -> {
-                                            } }).setVisible(true);
+                                    keranjang.put(barang, jumlahBaru);
                                 }
-                            },
-                            e -> {
-                            } // batal
+                                updateDaftarPembelian();
+                            } catch (NumberFormatException ex) {
+                                new BlurPopupDialog(
+                                        frame,
+                                        "Jumlah Tidak Valid",
+                                        "Masukkan angka yang valid.",
+                                        new String[]{"OK"},
+                                        new ActionListener[]{evt -> {
+                                            }}).setVisible(true);
+                            }
+                        },
+                        e -> {
+                        } // batal
                     },
                     inputField).setVisible(true);
         }
@@ -312,9 +317,9 @@ public class PenjualanControllerGUI extends JPanel {
                         frame,
                         "Tidak Ada Barang",
                         "Tidak ada barang yang dibeli.",
-                        new String[] { "OK" },
-                        new ActionListener[] { e -> {
-                        } }).setVisible(true);
+                        new String[]{"OK"},
+                        new ActionListener[]{e -> {
+                            }}).setVisible(true);
                 return;
             }
 
@@ -324,9 +329,9 @@ public class PenjualanControllerGUI extends JPanel {
                         frame,
                         "Nama Kosong",
                         "Nama pelanggan tidak boleh kosong.",
-                        new String[] { "OK" },
-                        new ActionListener[] { e -> {
-                        } }).setVisible(true);
+                        new String[]{"OK"},
+                        new ActionListener[]{e -> {
+                            }}).setVisible(true);
                 return;
             }
 
@@ -334,10 +339,10 @@ public class PenjualanControllerGUI extends JPanel {
                     frame,
                     "Metode Pembayaran",
                     "Pilih metode pembayaran:",
-                    new String[] { "Tunai", "Cicilan" },
-                    new ActionListener[] {
-                            e -> prosesTunai(frame),
-                            e -> prosesCicilan(namaPelanggan)
+                    new String[]{"Tunai", "Cicilan"},
+                    new ActionListener[]{
+                        e -> prosesTunai(frame),
+                        e -> prosesCicilan(namaPelanggan)
                     }).setVisible(true);
         }
     }
@@ -349,68 +354,80 @@ public class PenjualanControllerGUI extends JPanel {
                 frame,
                 "Pembayaran Tunai",
                 "Masukkan jumlah pembayaran (Rp):",
-                new String[] { "Bayar", "Batal" },
-                new ActionListener[] {
-                        e -> {
-                            try {
-                                double totalPembelian = hitungTotalPembelian();
-                                double pembayaran = Double.parseDouble(bayarField.getText());
+                new String[]{"Bayar", "Batal"},
+                new ActionListener[]{
+                    e -> {
+                        try {
+                            double totalPembelian = hitungTotalPembelian();
+                            double pembayaran = Double.parseDouble(bayarField.getText());
 
-                                if (pembayaran >= totalPembelian) {
-                                    double kembalian = pembayaran - totalPembelian;
+                            if (pembayaran >= totalPembelian) {
+                                double kembalian = pembayaran - totalPembelian;
 
-                                    new BlurPopupDialog(
-                                            frame,
-                                            "Pembayaran Berhasil",
-                                            "Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian),
-                                            new String[] { "OK" },
-                                            new ActionListener[] { evt -> {
-                                            } }).setVisible(true);
-
-                                    BarangController bc = new BarangController();
-                                    PemasukanController pec = new PemasukanController();
-                                    pec.tambahPemasukan(
-                                            new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
-                                    cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
-
-                                    for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
-                                        Barang barang = entry.getKey();
-                                        int jumlah = entry.getValue();
-                                        double subtotal = barang.getHargaJual() * jumlah;
-                                        bc.kurangiStok(barang.getId(), jumlah);
-                                        pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal,
-                                                "Penjualan barang: " + barang.getNama()));
-                                    }
-
-                                    keranjang.clear();
-                                    updateDaftarPembelian();
-                                    tfNamaPelanggan.setText("");
-                                    new AuditLogController().catatLog(
-                                      "Penjualan tunai oleh pelanggan: " + tfNamaPelanggan.getText().trim());
-                                } else {
-                                    new BlurPopupDialog(
-                                            frame,
-                                            "Pembayaran Gagal",
-                                            "Jumlah pembayaran kurang dari total.",
-                                            new String[] { "OK" },
-                                            new ActionListener[] { evt -> {
-                                            } }).setVisible(true);
-                                }
-                            } catch (NumberFormatException ex) {
                                 new BlurPopupDialog(
                                         frame,
-                                        "Input Tidak Valid",
-                                        "Masukkan angka yang valid.",
-                                        new String[] { "OK" },
-                                        new ActionListener[] { evt -> {
-                                        } }).setVisible(true);
+                                        "Pembayaran Berhasil",
+                                        "Kembalian: Rp" + new DecimalFormat("#,###.00").format(kembalian),
+                                        new String[]{"OK"},
+                                        new ActionListener[]{evt -> {
+                                            }}).setVisible(true);
+
+                                BarangController bc = new BarangController();
+                                PemasukanController pec = new PemasukanController();
+                                pec.tambahPemasukan(
+                                        new Pemasukan(0, new Date(), totalPembelian, "Pembayaran Tunai"));
+                                cetakPDF("Pembayaran Tunai", 1, totalPembelian, totalPembelian, "Tunai");
+
+                                // Tambahkan ini setelah sukses pembayaran
+                                PenjualanController pc = new PenjualanController();
+                                int idPenjualan = pc.tambahPenjualan(
+                                        new Penjualan(0, new Date(), totalPembelian, "tunai", "lunas", tfNamaPelanggan.getText().trim())
+                                );
+
+                                // Tambahkan detail penjualan
+                                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+                                    Barang barang = entry.getKey();
+                                    int jumlah = entry.getValue();
+                                    pc.tambahDetailPenjualan(idPenjualan, barang.getId(), jumlah, barang.getHargaJual());
+                                }
+
+                                for (Map.Entry<Barang, Integer> entry : keranjang.entrySet()) {
+                                    Barang barang = entry.getKey();
+                                    int jumlah = entry.getValue();
+                                    double subtotal = barang.getHargaJual() * jumlah;
+                                    bc.kurangiStok(barang.getId(), jumlah);
+                                    pec.tambahPemasukan(new Pemasukan(0, new Date(), subtotal,
+                                            "Penjualan barang: " + barang.getNama()));
+                                }
+
+                                keranjang.clear();
+                                updateDaftarPembelian();
+                                tfNamaPelanggan.setText("");
+                                new AuditLogController().catatLog(
+                                        "Penjualan tunai oleh pelanggan: " + tfNamaPelanggan.getText().trim());
+                            } else {
+                                new BlurPopupDialog(
+                                        frame,
+                                        "Pembayaran Gagal",
+                                        "Jumlah pembayaran kurang dari total.",
+                                        new String[]{"OK"},
+                                        new ActionListener[]{evt -> {
+                                            }}).setVisible(true);
                             }
-                        },
-                        e -> {
+                        } catch (NumberFormatException ex) {
+                            new BlurPopupDialog(
+                                    frame,
+                                    "Input Tidak Valid",
+                                    "Masukkan angka yang valid.",
+                                    new String[]{"OK"},
+                                    new ActionListener[]{evt -> {
+                                        }}).setVisible(true);
                         }
+                    },
+                    e -> {
+                    }
                 },
                 bayarField).setVisible(true);
-        
 
     }
 
@@ -437,9 +454,9 @@ public class PenjualanControllerGUI extends JPanel {
                     frame,
                     "Cicilan Dicatat",
                     "Pembelian dicatat sebagai hutang.",
-                    new String[] { "OK" },
-                    new ActionListener[] { e -> {
-                    } }).setVisible(true);
+                    new String[]{"OK"},
+                    new ActionListener[]{e -> {
+                        }}).setVisible(true);
         }
 
         cetakPDF("Pembelian Cicilan", 1, totalPembelian, totalPembelian, "Cicilan");
@@ -447,7 +464,7 @@ public class PenjualanControllerGUI extends JPanel {
         updateDaftarPembelian();
         tfNamaPelanggan.setText("");
         new AuditLogController().catatLog(
-            "Penjualan cicilan oleh pelanggan: " + namaPelanggan);
+                "Penjualan cicilan oleh pelanggan: " + namaPelanggan);
 
     }
 
@@ -504,13 +521,13 @@ public class PenjualanControllerGUI extends JPanel {
                         frame,
                         "Cetak PDF",
                         "Struk disimpan di: " + filePath,
-                        new String[] { "OK" },
-                        new ActionListener[] { evt -> {
-                        } }).setVisible(true);
+                        new String[]{"OK"},
+                        new ActionListener[]{evt -> {
+                            }}).setVisible(true);
             }
-        new AuditLogController().catatLog(
-            "Cetak struk PDF metode: " + metode + 
-            " untuk " + tfNamaPelanggan.getText().trim());
+            new AuditLogController().catatLog(
+                    "Cetak struk PDF metode: " + metode
+                    + " untuk " + tfNamaPelanggan.getText().trim());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -520,9 +537,9 @@ public class PenjualanControllerGUI extends JPanel {
                         frame,
                         "Gagal Mencetak",
                         "Gagal mencetak PDF: " + e.getMessage(),
-                        new String[] { "OK" },
-                        new ActionListener[] { evt -> {
-                        } }).setVisible(true);
+                        new String[]{"OK"},
+                        new ActionListener[]{evt -> {
+                            }}).setVisible(true);
             }
         }
     }
