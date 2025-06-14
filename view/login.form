@@ -354,7 +354,7 @@
                   <Font name="Calisto MT" size="48" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="c3" green="db" red="ed" type="rgb"/>
+                  <Color blue="98" green="ca" red="e4" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="BENING WORK"/>
               </Properties>

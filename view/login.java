@@ -27,6 +27,7 @@ public class login extends javax.swing.JFrame {
     
     public login() {
        initComponents();
+       setLocationRelativeTo(null);
        resizeLogo();
        setBackground(new java.awt.Color(0, 0, 0, 0)); // Alpha = 0 untuk transparan total
     }
@@ -188,7 +189,7 @@ public class login extends javax.swing.JFrame {
 
         jLabel5.setBackground(new java.awt.Color(237, 219, 195));
         jLabel5.setFont(new java.awt.Font("Calisto MT", 1, 48)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(237, 219, 195));
+        jLabel5.setForeground(new java.awt.Color(228, 202, 152));
         jLabel5.setText("BENING WORK");
 
         javax.swing.GroupLayout uASPBO2Layout = new javax.swing.GroupLayout(uASPBO2);
@@ -274,7 +275,7 @@ public class login extends javax.swing.JFrame {
                 new String[]{"Continue"},
                 new ActionListener[]{
                     e -> {
-                        new kasir().setVisible(true);
+                        new home().setVisible(true);
                         dispose();
                     }
                 }

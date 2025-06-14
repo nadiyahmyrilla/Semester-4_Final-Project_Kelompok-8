@@ -18,6 +18,7 @@ public class home extends javax.swing.JFrame {
     
     public home() {
         initComponents();
+        setLocationRelativeTo(null);
         resizeLogo();
         // Tambahkan ini setelah initComponents()
         setBackground(new java.awt.Color(0, 0, 0, 0));
@@ -76,7 +77,8 @@ public class home extends javax.swing.JFrame {
         btnStock3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         btnStock3.setForeground(new java.awt.Color(255, 255, 255));
         btnStock3.setText("STOCK");
-        btnStock3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnStock3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
+        btnStock3.setBorderPainted(false);
         btnStock3.setPreferredSize(new java.awt.Dimension(150, 40));
         btnStock3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +90,8 @@ public class home extends javax.swing.JFrame {
         btnAudit3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         btnAudit3.setForeground(new java.awt.Color(255, 255, 255));
         btnAudit3.setText("AUDIT");
-        btnAudit3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAudit3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
+        btnAudit3.setBorderPainted(false);
         btnAudit3.setPreferredSize(new java.awt.Dimension(150, 40));
         btnAudit3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,7 +117,8 @@ public class home extends javax.swing.JFrame {
         btnLaporan3.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
         btnLaporan3.setForeground(new java.awt.Color(255, 255, 255));
         btnLaporan3.setText("LAPORAN");
-        btnLaporan3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnLaporan3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
+        btnLaporan3.setBorderPainted(false);
         btnLaporan3.setPreferredSize(new java.awt.Dimension(150, 40));
         btnLaporan3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +130,8 @@ public class home extends javax.swing.JFrame {
         btnLogout3.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         btnLogout3.setForeground(new java.awt.Color(255, 255, 255));
         btnLogout3.setText("Log Out");
-        btnLogout3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnLogout3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.black, java.awt.Color.gray));
+        btnLogout3.setBorderPainted(false);
         btnLogout3.setPreferredSize(new java.awt.Dimension(100, 30));
         btnLogout3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,8 +159,11 @@ public class home extends javax.swing.JFrame {
                     .addGroup(uASPBO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnLaporan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnStock3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAudit3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(uASPBO1Layout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         uASPBO1Layout.setVerticalGroup(
@@ -171,9 +179,9 @@ public class home extends javax.swing.JFrame {
                 .addComponent(btnStock3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(btnLaporan3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(59, 59, 59)
                 .addComponent(btnLogout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(61, 61, 61))
         );
 
         uASPBO2.setBackground(new java.awt.Color(255, 235, 202));
@@ -267,6 +275,7 @@ public class home extends javax.swing.JFrame {
 
     private void btnLogout3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogout3ActionPerformed
         new login().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnLogout3ActionPerformed
 
     private void btnAudit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAudit3ActionPerformed
