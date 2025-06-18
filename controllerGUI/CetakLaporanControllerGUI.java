@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+// Merupakan file dari Controller GUI
 package controllerGUI;
 
 import com.itextpdf.text.*;
@@ -21,19 +18,15 @@ import model.DetailPenjualan;
 import model.DiagramLaporan;
 import model.Pemasukan;
 import model.Pengeluaran;
-/**
- *
- * @author aurel
- */
+
 public class CetakLaporanControllerGUI {
-    
-
-
+    // Deklarasi controller yang dibutuhkan
     private DetailPenjualanController detailPenjualanController;
     private PengeluaranController pengeluaranController;
     private PemasukanController pemasukanController;
     private BarangController barangController;
 
+    // Konstruktor, menginisialisasi semua controller
     public CetakLaporanControllerGUI() {
         detailPenjualanController = new DetailPenjualanController();
         pengeluaranController = new PengeluaranController();
@@ -41,30 +34,35 @@ public class CetakLaporanControllerGUI {
         pemasukanController = new PemasukanController();
     }
 
+    // Fungsi utama untuk mencetak laporan keuangan ke dalam file PDF
     public void cetakLaporanKeuangan() {
-        Document document = new Document();
+        Document document = new Document();  // Membuat objek dokumen PDF
         try {
+            // Format tanggal hari ini
             String tanggal = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            String folderPath = "pdf/laporan_keuangan/";
-            new File(folderPath).mkdirs();
-            String filePath = folderPath + "laporan_keuangan_" + tanggal + ".pdf";
+            String folderPath = "pdf/laporan_keuangan/";     // Folder penyimpanan PDF
+            new File(folderPath).mkdirs();                   // Membuat folder jika belum ada
+            String filePath = folderPath + "laporan_keuangan_" + tanggal + ".pdf"; // Nama file PDF
 
+            // Membuat writer untuk menulis file PDF
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
-            document.open();
+            document.open(); // Membuka dokumen untuk ditulis
 
+            // Menambahkan judul dan tanggal laporan
             document.add(new Paragraph("Laporan Keuangan - Bening Work", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16)));
             document.add(new Paragraph("Tanggal: " + tanggal));
-            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE); // Spasi kosong
 
-            // Tabel Pemasukan(Penjualan)
+            // Membuat tabel untuk detail penjualan hari ini
             document.add(new Paragraph("Detail Penjualan Hari Ini:"));
             PdfPTable penjualanTable = new PdfPTable(4);
-            penjualanTable.setWidthPercentage(100);
+            penjualanTable.setWidthPercentage(100); // Mengatur lebar tabel
             penjualanTable.addCell("Barang");
             penjualanTable.addCell("Jumlah");
             penjualanTable.addCell("Harga Satuan");
             penjualanTable.addCell("Subtotal");
 
+            // Mengambil data penjualan hari ini
             List<DetailPenjualan> daftarpenjualan = detailPenjualanController.getDetailPenjualanHariIni();
             for (DetailPenjualan dp : daftarpenjualan) {
                 penjualanTable.addCell(dp.getNamaBarang());
@@ -73,10 +71,10 @@ public class CetakLaporanControllerGUI {
                 penjualanTable.addCell(String.valueOf(dp.getJumlah() * dp.getHargaSatuan()));
             }
 
-            document.add(penjualanTable);
-            document.add(Chunk.NEWLINE);
+            document.add(penjualanTable); // Menambahkan tabel ke dokumen
+            document.add(Chunk.NEWLINE);  // Spasi
 
-            //Tabel Pengeluaran
+            // Membuat tabel pengeluaran
             document.add(new Paragraph("Detail Pengeluaran Hari Ini:"));
             PdfPTable pengeluaranTable = new PdfPTable(3);
             pengeluaranTable.setWidthPercentage(100);
@@ -84,20 +82,22 @@ public class CetakLaporanControllerGUI {
             pengeluaranTable.addCell("Jumlah");
             pengeluaranTable.addCell("Subtotal");
 
-            BarangController barangController = new BarangController();
+            // Mengambil data pengeluaran hari ini
+            BarangController barangController = new BarangController(); // Controller lokal
             List<Pengeluaran> daftarPengeluaran = pengeluaranController.getPengeluaranHariIni();
 
+            // Menambahkan data pengeluaran ke tabel
             for (Pengeluaran p : daftarPengeluaran) {
                 String namaBarang = barangController.getNamaBarangById(p.getBarangId());
-
                 pengeluaranTable.addCell(namaBarang);
                 pengeluaranTable.addCell(String.valueOf(p.getJumlah()));
                 pengeluaranTable.addCell(String.valueOf(p.getTotal()));
             }
 
-            document.add(pengeluaranTable);
-            document.add(Chunk.NEWLINE);
-            // PERHITUNGAN LABA HARI INI
+            document.add(pengeluaranTable); // Menambahkan tabel ke dokumen
+            document.add(Chunk.NEWLINE);    // Spasi
+
+            // Perhitungan laba / rugi
             double totalPemasukanHariIni = pemasukanController.getPemasukanHariIni().stream()
                     .mapToDouble(Pemasukan::getTotal).sum();
             double totalPengeluaranHariIni = pengeluaranController.getPengeluaranHariIni().stream()
@@ -105,6 +105,7 @@ public class CetakLaporanControllerGUI {
             double laba = totalPemasukanHariIni - totalPengeluaranHariIni;
             double persentaseLaba = totalPemasukanHariIni != 0 ? (laba / totalPemasukanHariIni) * 100 : 0;
 
+            // Tabel ringkasan perhitungan laba/rugi
             PdfPTable summaryTable = new PdfPTable(2);
             summaryTable.setWidthPercentage(60);
             summaryTable.addCell("Total Pemasukan Hari Ini ");
@@ -116,9 +117,9 @@ public class CetakLaporanControllerGUI {
             summaryTable.addCell("Persentase Laba");
             summaryTable.addCell(String.format("%.2f%%", persentaseLaba));
 
-            document.add(summaryTable);
+            document.add(summaryTable); // Tambahkan ke dokumen
 
-            // Tambahkan Diagram Batang
+            // Menambahkan diagram batang (opsional visualisasi)
             try {
                 DiagramLaporan diagram = new DiagramLaporan();
                 List<DetailPenjualan> penjualanHariIni = detailPenjualanController.getDetailPenjualanHariIni();
@@ -128,11 +129,14 @@ public class CetakLaporanControllerGUI {
                 JOptionPane.showMessageDialog(null, "Gagal menambahkan diagram ke PDF: " + ex.getMessage());
             }
 
-            document.close();
-            new AuditLogController().catatLog("Laporan Keuangan dicetak");
+            document.close(); // Menutup dokumen setelah selesai
+            new AuditLogController().catatLog("Laporan Keuangan dicetak"); // Mencatat aktivitas
 
+            // Notifikasi bahwa laporan berhasil dibuat
             JOptionPane.showMessageDialog(null, "Laporan berhasil disimpan ke:\n" + filePath);
+
         } catch (Exception e) {
+            // Menampilkan pesan error jika proses gagal
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Gagal ekspor PDF: " + e.getMessage());
         }

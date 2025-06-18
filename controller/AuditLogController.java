@@ -1,3 +1,4 @@
+// Merupakan file dari Controller
 package controller;
 
 import db.DatabaseConnection;
@@ -9,23 +10,29 @@ import java.util.List;
 
 public class AuditLogController {
 
+    // Fungsi untuk mencatat log aktivitas ke dalam tabel audit_log
     public void catatLog(String aksi) {
         String sql = "INSERT INTO audit_log (aksi) VALUES (?)";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            // Mengatur parameter aksi
             ps.setString(1, aksi);
+            // Menjalankan perintah insert
             ps.executeUpdate();
         } catch (SQLException e) {
+            // Menangani error SQL jika terjadi
             e.printStackTrace();
         }
     }
 
+    // Fungsi untuk mengambil semua data log dari tabel audit_log
     public List<AuditLog> getSemuaLog() {
         List<AuditLog> list = new ArrayList<>();
         String sql = "SELECT * FROM audit_log ORDER BY tanggal DESC";
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+            // Menelusuri hasil query dan menambahkan ke dalam list
             while (rs.next()) {
                 list.add(new AuditLog(
                     rs.getInt("id"),
@@ -38,16 +45,5 @@ public class AuditLogController {
         }
         return list;
     }
-    public void hapusLogById(int id) {
-        String sql = "DELETE FROM audit_log WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }

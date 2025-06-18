@@ -1,3 +1,4 @@
+// Merupakan file dari Controller GUI
 package controllerGUI;
 
 import javax.swing.*;
@@ -38,8 +39,8 @@ public class PenjualanControllerGUI extends JPanel {
         daftarPembelianPanel.setBackground(new Color(255, 235, 202));
         daftarPembelianPanel.setLayout(new BoxLayout(daftarPembelianPanel, BoxLayout.Y_AXIS));
         daftarPembelianPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(153, 0, 0), 2),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+            BorderFactory.createLineBorder(new Color(153, 0, 0), 2),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         JScrollPane scrollDaftar = new JScrollPane(daftarPembelianPanel);
         scrollBarang.setBackground(new Color(255, 235, 202));
         daftarPembelianPanel.setPreferredSize(new Dimension(300, 200));

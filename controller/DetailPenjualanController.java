@@ -1,3 +1,4 @@
+// Merupakan file dari Controller
 package controller;
 
 import model.DetailPenjualan;
@@ -9,8 +10,10 @@ import java.util.List;
 
 public class DetailPenjualanController {
 
+    // Mengambil daftar detail penjualan untuk transaksi yang terjadi pada hari ini
     public List<DetailPenjualan> getDetailPenjualanHariIni() {
         List<DetailPenjualan> list = new ArrayList<>();
+        // Query SQL untuk mengambil data detail penjualan yang bergabung dengan tabel penjualan dan barang, dengan filter tanggal transaksi yang sama dengan tanggal hari ini (CURDATE())
         String sql = "SELECT dp.*, b.nama AS nama_barang FROM detail_penjualan dp " +
                      "JOIN penjualan p ON dp.penjualan_id = p.id " +
                      "JOIN barang b ON dp.barang_id = b.id " +
@@ -19,7 +22,7 @@ public class DetailPenjualanController {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
-
+            // Menelusuri hasil query dan membuat objek DetailPenjualan untuk setiap baris hasil
             while (rs.next()) {
                 DetailPenjualan dp = new DetailPenjualan(
                     rs.getInt("id"),
@@ -28,8 +31,9 @@ public class DetailPenjualanController {
                     rs.getInt("jumlah"),
                     rs.getDouble("harga_satuan")
                 );
+                // Menambahkan nama barang dari hasil JOIN ke objek detail penjualan
                 dp.setNamaBarang(rs.getString("nama_barang"));
-                list.add(dp);
+                list.add(dp); // Menambahkan ke dalam list hasil
             }
 
         } catch (SQLException e) {
